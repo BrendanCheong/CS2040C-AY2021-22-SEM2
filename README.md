@@ -19,7 +19,7 @@ python3.10 Python/Main.py
 ### C++
 
 ```
-g++ -o main.out Cpp/main.cpp
+g++ -o main.out --std c++17 main.cpp
 ./main.out < test.in
 
 # main being the name of the desired file name
@@ -30,16 +30,17 @@ g++ -o main.out Cpp/main.cpp
 ```cpp
 #include <iostream>
 #include <bits/stdc++.h>
-#include <vector>
 
 using namespace std;
-using ll = long long;
+using ll  = long long;
+using ull = unsigned long long
 
 int main() 
 {
     // freopen("in.txt", "r", stdin);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
+    cout.tie(NULL);
 
     return 0;
 }

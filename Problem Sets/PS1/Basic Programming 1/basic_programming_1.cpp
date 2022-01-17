@@ -41,15 +41,11 @@ ll case3(vector<ll> arr)
 
 ll case4(vector<ll> arr)
 {
-    ll output = 0;
-    for (auto &i : arr)
-    {
-        output += i;
-    }
-    return output;
+    ll accumulator = 0; // has to accumulate into a long long not an int by default
+    return accumulate(arr.begin(), arr.end(), accumulator);
 }
 
-ll case5(vector<ll> arr)
+ll case5(vector<ll> arr, ll size)
 {
     ll evenSum = 0;
     for (auto &i : arr)
@@ -62,102 +58,47 @@ ll case5(vector<ll> arr)
     return evenSum;
 }
 
-string case6(vector<ll> arr)
+string case6(vector<ll> arr, ll size)
 {
     string result = "";
-    ll number = 0;
-    ll letter = 0;
-    map<ll, char> alphabet = {
-        {0, 'a'},
-        {1, 'b'},
-        {2, 'c'},
-        {3, 'd'},
-        {4, 'e'},
-        {5, 'f'},
-        {6, 'g'},
-        {7, 'h'},
-        {8, 'i'},
-        {9, 'j'},
-        {10, 'k'},
-        {11, 'l'},
-        {12, 'm'},
-        {13, 'n'},
-        {14, 'o'},
-        {15, 'p'},
-        {16, 'q'},
-        {17, 'r'},
-        {18, 's'},
-        {19, 't'},
-        {20, 'u'},
-        {21, 'v'},
-        {22, 'w'},
-        {23, 'x'},
-        {24, 'y'},
-        {25, 'z'}};
-    for (auto &i : arr)
+    for (ll i = 0; i < size; ++i)
     {
-        // get the value using the key from map
-        char letter = alphabet.at(i % 26);
-
-        // push the char llo the string once taken from map
-        result.push_back(letter);
+        result += (char)('a' + arr[i] % 26);
     }
 
     return result;
 }
 
-string case7(vector<ll> arr)
+string case7(vector<ll> arr, ll size)
 {
-    // ll index = arr[0];
-    // unordered_set<ll> llSet;
+    ll index = arr[0];
+    unordered_set<ll> llSet;
 
-    // // initialise the set
-    // llSet.insert(index);
+    // initialise the set
+    llSet.insert(index);
 
-    // while (index < arr.size())
-    // {
-    //     // if the current index i is index N-1, prll “Done” and stop;
-    //     if (index == arr.size() - 1)
-    //     {
-    //         return "Done";
-    //     }
-    //     index = arr[index];
-
-    //     // if element is already in the set, sound off as Cyclic
-    //     // else, add element llo set
-    //     if (llSet.find(index) == llSet.end())
-    //     {
-    //         llSet.insert(index);
-    //     }
-    //     else
-    //     {
-    //         return "Cyclic";
-    //     }
-    // }
-
-    // return "Out";
-    ll index = 0;
-    vector<ll> visitation(arr.size(), 0);
-
-    while (true)
+    while (index < size)
     {
-        if (index == arr.size() - 1)
+        // if the current index i is index N-1, push “Done” and stop;
+        if (index == size - 1)
         {
             return "Done";
         }
-        if (index >= arr.size())
-        {
-            return "Out";
-        }
-        if (visitation[index])
-        {
-            break;
-        }
-        visitation[index] = 10;
         index = arr[index];
+
+        // if element is already in the set, sound off as Cyclic
+        // else, add element llo set
+        if (llSet.find(index) == llSet.end())
+        {
+            llSet.insert(index);
+        }
+        else
+        {
+            return "Cyclic";
+        }
     }
 
-    return "Cyclic";
+    return "Out";
 }
 
 int main()
@@ -166,18 +107,17 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
-    vector<ll> arr;
     ll size = 0;
     ll t = 0;
-    ll input;
 
     cin >> size;
     cin >> t;
 
-    for (ll i; i <= size; ++i)
+    vector<ll> arr(size, 0);
+
+    for (ll i = 0; i < size; ++i)
     {
-        cin >> input;
-        arr.push_back(input);
+        cin >> arr[i];
     }
 
     switch (t)
@@ -192,13 +132,13 @@ int main()
         cout << case4(arr);
         break;
     case (5):
-        cout << case5(arr);
+        cout << case5(arr, size);
         break;
     case (6):
-        cout << case6(arr);
+        cout << case6(arr, size);
         break;
     case (7):
-        cout << case7(arr);
+        cout << case7(arr, size);
         break;
     default:
         cout << case1(arr);
