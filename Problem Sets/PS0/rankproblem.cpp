@@ -11,9 +11,12 @@ int main() {
   //freopen("in.txt", "r", stdin);
   int n, m; cin >> n >> m;
   vector<int> ranking(n);
+
   iota(ranking.begin(), ranking.end(), 0); // 1, 2, 3, ..., N
   while (m--) { // repeat m times, one for each of the m matches
-    char dummy1, dummy2; int i, j; cin >> dummy1 >> i >> dummy2 >> j; // team i beats team j
+    char dummy1, dummy2;
+    int i, j;
+    cin >> dummy1 >> i >> dummy2 >> j; // team i beats team j
     // cout << i << ' ' << j << '\n'; // see that i and j are read correctly, even if i/j is a 2 digits or 3 digits integer
     int idx_i = find(ranking.begin(), ranking.end(), i) - ranking.begin(); // we will get the index of value i at the moment (inside ranking vector)
     int idx_j = find(ranking.begin(), ranking.end(), j) - ranking.begin();

@@ -4,46 +4,46 @@
  * 1a) You can  change <iostream> with <bits/stdc++.h> no problem
  * iostream is a header file that allows you to import & use cin and cout
  * bits/stdc++h. imports every header file including cin and cout
- * 
+ *
  * 1b) No potential issues, this just means that we dont have to use std:: all the time
  * like std::cin and std::cout which is annoying to type.
  * Can also add your own stuff like using ll = long long int;
  * or using ul = unsigned long long int;
- * 
+ *
  * 1c) template class is similar to generics where the input to T is the type of the class
  * when we first create a class object.
  * For example, since its <class T> and ListArray uses T
  * when we create an instance of ListArray like ListArray<int>, the type T is now int
  * for all parts of the class ListArray (Ex: T get becomes int get)
  * templates are an easy way to create a single class to work with different data types.
- * 
+ *
  * 1d) The array is limited to 100 element size. It would be better if 100 was N instead imo.
  * So that we can define the size of the ListArray when creating an isntance.
- * 
+ *
  * 1e) HELP: Just alternative syntax for initializing so you don't have to write stuff in the ctor body.
  * I wonder whats another way to initialise List Array
- * 
+ *
  * 1f) The method to get the index in the array does not consider edge cases like
  * out of bounds cases.
- * 
+ *
  * 1g) HELP: Why is there N == 100?
  * HELP: WHY?? N(0) is calling N's constructor (int) with 0 as the argument.
  * This is a guard clause for edge cases when there are out of bounds int selected.
- * 
+ *
  * 1h) The extra for loop makes every element after the index to become the last inputted element into the method.
  * So it must be commented out or else the method won't work.
- * 
+ *
  * 1i) Include guard clause for edge cases. Other than that the deleting algorithm is fine as it is.
- * 
+ *
  * 1j) This line is just used to print out the contents of the list array A.
  * for each element in the array, space them out with character ' '.
  * This is because c++ has no way to actually print out the array nicely without using a for loop.
  * Same applies to vectors.
- * 
+ *
  * 1k) I will attempt to make a quicksort algorithm using a pivot. Maybe I'll include
  * a bubble sort algo later.
- * 
- * 1l) Yes you can! Using new just means we have to deallocate the newly created object 
+ *
+ * 1l) Yes you can! Using new just means we have to deallocate the newly created object
  * from the heap memory or else it will cause memory leaks.
  * This is because C++ is not a garbage collected language like java.
 */
@@ -130,19 +130,20 @@ public:
                 }
             }
         } // O(N^2)
+
     }
 
-    T swap(T arr[], T i, T j)
+    int swap(int arr[], int i, int j)
     {
-        T temp = arr[i];
+        int temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;
     }
 
-    T partition(T arr[], T l, T r)
+    int partition(int arr[], int l, int r)
     {
-        T pivot = arr[r];
-        T i = l - 1;
+        int pivot = arr[r];
+        int i = l - 1;
 
         for (int j = l; j < r; ++j)
         {
@@ -154,11 +155,11 @@ public:
         }
     }
 
-    void quicksort(T arr[], T l, T r)
+    void quicksort(int arr[], int l, int r)
     {
         if (l < r)
         {
-            T pi = partition(arr, l, r);
+            int pi = partition(arr, l, r);
             quicksort(arr, l, pi - 1);
             quicksort(arr, pi + 1, r);
         }
@@ -167,7 +168,7 @@ public:
 
 int main()
 {
-    ListArray<int> *LA = new ListArray<int>(); // question 1l
+    ListArray<int>* LA = new ListArray<int>(); // question 1l
     LA->insert(0, 5);
     LA->insert(0, 1);
     LA->insert(0, 4);

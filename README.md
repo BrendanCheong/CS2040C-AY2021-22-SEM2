@@ -33,7 +33,7 @@ g++ -o main.out --std c++17 main.cpp
 
 using namespace std;
 using ll  = long long;
-using ull = unsigned long long
+using ull = unsigned long long int;
 
 int main() 
 {
