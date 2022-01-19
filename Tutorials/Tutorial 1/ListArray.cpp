@@ -21,10 +21,12 @@
  * So that we can define the size of the ListArray when creating an isntance.
  *
  * 1e) HELP: Just alternative syntax for initializing so you don't have to write stuff in the ctor body.
- * I wonder whats another way to initialise List Array
+ * ListArray() {
+ *  N = 0;
+ * }
  *
  * 1f) The method to get the index in the array does not consider edge cases like
- * out of bounds cases.
+ * out of bounds cases. NOTE: C++ doesn't have out of bound errors by default.
  *
  * 1g) HELP: Why is there N == 100?
  * HELP: WHY?? N(0) is calling N's constructor (int) with 0 as the argument.
@@ -114,6 +116,7 @@ public:
     void sortList()
     {
         bubbleSort();
+        //sort(A, A + N); this only works if its NOT a custom type. Else you need a comparator function
     } // sort array A, question 1k
 
     T bubbleSort()
