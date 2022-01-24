@@ -28,7 +28,7 @@ ll random(ll min, ll max) {  //range : [min, max]
 }
 
 ll quickSelect(vector<ll> arr, ll left, ll right, ll kth) {
-    ll pivot = arr[right]; // pivot can be randomly generated between 0 <= right <= arr.size() - 1
+    ll pivot = arr[right];
     ll pointer = left; // pointer starts at the front of the array, aka 0 index
     for (size_t i = left; i < right; ++i)
     {
@@ -72,7 +72,7 @@ ll partition(vector<ll> arr, ll left, ll right) {
     return j;
 }
 
-void quickSort(vector<ll>& arr, ll left, ll right) {
+void quickSort(vector<ll> arr, ll left, ll right) {
     if (left < right) {
         ll j = partition(arr, left, right);
         quickSort(arr, left, j);
@@ -92,14 +92,13 @@ int main()
     vector<ll> arr3 = arr;
 
     ll k = 2;
-    const ll initialPivot = random(0, arr.size() - 1); // random initial pivot, must be 0 <= pivot <= arr.size() - 1, can be any index in array.
-    // const ll initialPivot = arr.size() - 1;
+    //const ll initialPivot = random(0, arr.size() - 1); // random initial pivot, too inconsistent
+    const ll initialPivot = arr.size() - 1;
 
     ll kth = --k; // kth smallest, is kth - 1 as input
     // ll kth = arr.size() - k; // kth largest, is arr.size() - k
 
     cout << quickSelect(arr, 0, initialPivot, kth) << endl;
-
 
     return 0;
 }
