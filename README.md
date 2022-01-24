@@ -28,6 +28,12 @@ g++ -o main.out --std c++17 main.cpp
 # Boilerplate 
 
 ```cpp
+/**
+ * Matric: A0217988E
+ * Name: Brendan Cheong Ern Jie
+ * Lab: 10
+ * TA: Fidella Widjojo
+*/
 #include <iostream>
 #include <bits/stdc++.h>
 
