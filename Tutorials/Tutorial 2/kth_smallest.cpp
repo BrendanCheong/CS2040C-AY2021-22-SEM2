@@ -27,7 +27,7 @@ ll random(ll min, ll max) {  //range : [min, max]
     return min + rand() % ((max + 1) - min);
 }
 
-ll quickSelect(vector<ll> arr, ll left, ll right, ll kth) {
+ll quickSelect(vector<ll>& arr, ll left, ll right, ll kth) {
     ll pivot = arr[right];
     ll pointer = left; // pointer starts at the front of the array, aka 0 index
     for (size_t i = left; i < right; ++i)
@@ -92,13 +92,23 @@ int main()
     vector<ll> arr3 = arr;
 
     ll k = 2;
-    //const ll initialPivot = random(0, arr.size() - 1); // random initial pivot, too inconsistent
+    // const ll initialPivot = random(0, arr.size() - 1); // random initial pivot, too inconsistent
     const ll initialPivot = arr.size() - 1;
 
     ll kth = --k; // kth smallest, is kth - 1 as input
     // ll kth = arr.size() - k; // kth largest, is arr.size() - k
 
     cout << quickSelect(arr, 0, initialPivot, kth) << endl;
+
+    printVec(arr);
+
+    /**
+     * Alternative Answer
+    */
+    stable_sort(arr2.begin(), arr2.end());
+    cout << '\n' << arr2[kth];
+
+    printVec(arr2);
 
     return 0;
 }
