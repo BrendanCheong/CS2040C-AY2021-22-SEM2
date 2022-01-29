@@ -1,6 +1,17 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+unsigned long long int random(int min, int max) //range : [min, max]
+{
+    static bool first = true;
+    if (first)
+    {
+        srand(time(NULL)); //seeding for the first time only!
+        first = false;
+    }
+    return min + rand() % ((max + 1) - min);
+}
+
 // https://visualgo.net/en/sorting?slide=7-1
 void bubbleSort(int a[], int N) { // the standard version
     for (; N > 0; --N) // N iterations
@@ -14,7 +25,9 @@ void merge(int a[], int low, int mid, int high) {
     // subarray1 = a[low..mid], subarray2 = a[mid+1..high], both sorted
     int N = high - low + 1;
     int b[N]; // discuss: why do we need a temporary array b?
-    int left = low, right = mid + 1, bIdx = 0;
+    int left = low;
+    int right = mid + 1;
+    int bIdx = 0;
     while (left <= mid && right <= high) // the merging
         b[bIdx++] = (a[left] <= a[right]) ? a[left++] : a[right++];
     while (left <= mid) b[bIdx++] = a[left++]; // leftover, if any
@@ -120,7 +133,56 @@ void quickSort(int a[], int low, int high) {
         quickSort(a, pivotIdx + 1, high); // then sort right subarray
     }
 }
+vector<double> QuickSort(vector<double>& vec1) {
 
+    double i = 0;
+    double j = vec1.size() - 2;
+    double tmp;
+    int pivotindex = vec1.size() - 1;
+    double pivot = vec1[pivotindex];
+
+    if (vec1.size() <= 1)
+        return vec1;
+
+
+    while (i <= j) {
+        while (vec1[i] < pivot) {
+            i++;
+        }
+        while (vec1[j] > pivot)
+            j--;
+        if (i <= j) {
+            tmp = vec1[i];
+            vec1[i] = vec1[j];
+            vec1[j] = tmp;
+            i++;
+            j--;
+        }
+    }
+    // pivot change
+    vec1[pivotindex] = vec1[i];
+    vec1[i] = pivot;
+    pivotindex = i;
+
+    if (vec1.size() <= 2)
+        return vec1;
+    // partition
+    vector<double> left_vec, right_vec;
+    vector<double>::iterator pivotiter = vec1.begin() + pivotindex;
+    copy(vec1.begin(), pivotiter, back_inserter(left_vec));
+    copy(pivotiter + 1, vec1.end(), back_inserter(right_vec));
+
+
+    if (left_vec.size() > 0) {
+        QuickSort(left_vec);
+        copy(left_vec.begin(), left_vec.end(), vec1.begin());
+    }
+    if (right_vec.size() > 0) {
+        QuickSort(right_vec);
+        copy(right_vec.begin(), right_vec.end(), pivotiter + 1);
+    }
+    return vec1;
+}
 // function to perform the above algorithm
 void beadSort(int data[], int count) {
     // Find the maximum element
@@ -167,27 +229,71 @@ void printArray(int a[], int n) {
     cout << "\n";
 }
 
-unsigned long long int random(int min, int max) //range : [min, max]
-{
-    static bool first = true;
-    if (first)
-    {
-        srand(time(NULL)); //seeding for the first time only!
-        first = false;
+void printVector(vector<int>& arr) {
+    for (int i = 0; i < arr.size(); ++i) {
+        if (i > 0) cout << " ";
+        cout << arr[i];
     }
-    return min + rand() % ((max + 1) - min);
+    cout << "\n";
 }
 
-const long long int MAX_N = pow(10, 3); // big enough for our demo to notice the difference
+vector<int> quickSortVector(vector<int>& arr) {
+    vector<int> dummy;
+    if (arr.size() <= 1)
+        return dummy;
+    int pivot = arr[random(0, arr.size() - 1)];
+    vector<int> left, right;
+    for (int i = 1; i < arr.size(); ++i) {
+        if (arr[i] < pivot)
+            left.push_back(arr[i]);
+        else
+            right.push_back(arr[i]);
+    }
+    quickSortVector(left);
+    quickSortVector(right);
+    // arr.clear(); // O(n^2) to clear, might be better to create a new array instead
+    left.push_back(pivot);
+    left.insert(left.end(), right.begin(), right.end());
+    return left;
+}
+
+void mergeVec(vector<int>& a, int low, int mid, int high) {
+    // subarray1 = a[low..mid], subarray2 = a[mid+1..high], both sorted
+    int N = high - low + 1;
+    vector<int> b(N); // discuss: why do we need a temporary array b?
+    int left = low;
+    int right = mid + 1;
+    int bIdx = 0;
+    while (left <= mid && right <= high) // the merging
+        b[bIdx++] = (a[left] <= a[right]) ? a[left++] : a[right++];
+    while (left <= mid) b[bIdx++] = a[left++]; // leftover, if any
+    while (right <= high) b[bIdx++] = a[right++]; // leftover, if any
+    for (int k = 0; k < N; ++k) a[low + k] = b[k]; // copy back
+}
+
+// https://visualgo.net/en/sorting?slide=11-5
+void mergeSortVec(vector<int>& a, int low, int high) {
+    // the array to be sorted is a[low..high]
+    if (low < high) { // base case: low >= high (0 or 1 item)
+        int mid = (low + high) / 2;
+        mergeSortVec(a, low, mid); // divide into two halves
+        mergeSortVec(a, mid + 1, high); // then recursively sort them
+        mergeVec(a, low, mid, high); // conquer: the merge routine
+    }
+}
+
+const long long int MAX_N = pow(10, 6); // big enough for our demo to notice the difference
 const int MIN_RANGE = 1;
-const unsigned long long int MAX_RANGE = pow(10, 8);
+const unsigned long long int MAX_RANGE = pow(10, 4);
 // if you encounter runtime error/stack overflow (quite likely), you need to adjust your compilation setting to: g++ -std=gnu++17 -Wl,--stack,16777216
 
 int main() {
     int n = MAX_N; // n = 10; // use smaller number if you intend to print the actual array before/after sorting
     int a[MAX_N];
+    vector<int> vec1(MAX_N, 0);
     for (int i = 0; i < n; ++i) {
         a[i] = random(MIN_RANGE, MAX_RANGE); // [1..1000000]
+        vec1[i] = a[i];
     }
     int len = sizeof(a);
 
@@ -215,6 +321,20 @@ int main() {
     // sort(a, a+n); // there is a (quicker) Quick Sort inside (called 'introsort' if I am not mistaken)
     // printArray(a, n);
     cout << "Elapsed time for Quick Sort: " << double(clock() - begin) / CLOCKS_PER_SEC << "\n";
+
+    // begin = clock();
+    // // printArray(a, n);
+    // vector<int> sortedVec = quickSortVector(vec1); // experiment with line 31-32 above
+    // // sort(a, a+n); // there is a (quicker) Quick Sort inside (called 'introsort' if I am not mistaken)
+    // // printVector(sortedVec);
+    // cout << "Elapsed time for Quick Sort Vector: " << double(clock() - begin) / CLOCKS_PER_SEC << "\n";
+
+    begin = clock();
+    // printArray(a, n);
+    mergeSortVec(vec1, 0, n - 1); // experiment with line 31-32 above
+    // sort(a, a+n); // there is a (quicker) Quick Sort inside (called 'introsort' if I am not mistaken)
+    // printVector(vec1);
+    cout << "Elapsed time for Merge Sort Vector: " << double(clock() - begin) / CLOCKS_PER_SEC << "\n";
 
     // begin = clock();
     // // printArray(a, n);
