@@ -172,7 +172,6 @@ int main()
         cin >> r >> c >> studentNumber >> facultyIndex;
         Student student(pair<ll, ll>(r, c), studentNumber, facultyIndex);
         faculties[facultyIndex - 1].setStudents(student); // set Student for each faculty
-        // Do I need to sort cells first before allocating faculties to student according to the Student and Faculty Index?
     }
 
     /**
