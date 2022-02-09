@@ -125,7 +125,7 @@ void partition3way(int a[], int l, int r) {
 // https://visualgo.net/en/sorting?slide=12-8
 void quickSort(int a[], int low, int high) {
 
-    if (low < high) {
+    if (high - low + 1 > 5) {
         int pivotIdx = partition(a, low, high); // O(N)
         // a[low..high] ~> a[low..pivotIdxÃ¢â‚¬â€œ1], pivot, a[pivotIdx+1..high]
         quickSort(a, low, pivotIdx - 1); // recursively sort left subarray
@@ -282,9 +282,9 @@ void mergeSortVec(vector<int>& a, int low, int high) {
     }
 }
 
-const long long int MAX_N = pow(10, 6); // big enough for our demo to notice the difference
+const long long int MAX_N = pow(10, 1); // big enough for our demo to notice the difference
 const int MIN_RANGE = 1;
-const unsigned long long int MAX_RANGE = pow(10, 4);
+const unsigned long long int MAX_RANGE = 5;
 // if you encounter runtime error/stack overflow (quite likely), you need to adjust your compilation setting to: g++ -std=gnu++17 -Wl,--stack,16777216
 
 int main() {
@@ -313,13 +313,13 @@ int main() {
     for (int i = 0; i < n; ++i)
         // a[i] = i; // increasing input, one of the hardest test case for (non Randomized) Quick Sort
         // a[i] = 7; // constant input, also one of the hardest test case for (WRONGLY implemented or non Randomized) Quick Sort
-        a[i] = rand() % 1000000; // [1..1000000]
+        a[i] = rand() % 10; // [1..1000000]
 
     begin = clock();
     // printArray(a, n);
     quickSort(a, 0, n - 1); // experiment with line 31-32 above
     // sort(a, a+n); // there is a (quicker) Quick Sort inside (called 'introsort' if I am not mistaken)
-    // printArray(a, n);
+    printArray(a, n);
     cout << "Elapsed time for Quick Sort: " << double(clock() - begin) / CLOCKS_PER_SEC << "\n";
 
     // begin = clock();
@@ -329,12 +329,12 @@ int main() {
     // // printVector(sortedVec);
     // cout << "Elapsed time for Quick Sort Vector: " << double(clock() - begin) / CLOCKS_PER_SEC << "\n";
 
-    begin = clock();
+    //begin = clock();
     // printArray(a, n);
-    mergeSortVec(vec1, 0, n - 1); // experiment with line 31-32 above
+    //mergeSortVec(vec1, 0, n - 1); // experiment with line 31-32 above
     // sort(a, a+n); // there is a (quicker) Quick Sort inside (called 'introsort' if I am not mistaken)
     // printVector(vec1);
-    cout << "Elapsed time for Merge Sort Vector: " << double(clock() - begin) / CLOCKS_PER_SEC << "\n";
+    //cout << "Elapsed time for Merge Sort Vector: " << double(clock() - begin) / CLOCKS_PER_SEC << "\n";
 
     // begin = clock();
     // // printArray(a, n);
