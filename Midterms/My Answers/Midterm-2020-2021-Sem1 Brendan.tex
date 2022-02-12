@@ -1,0 +1,126 @@
+\documentclass{article}
+\usepackage{fullpage} %for 1-inch margins
+\usepackage{fancyvrb} %For code blocks
+\fvset{tabsize=4} %Set indentation to 4
+\usepackage{enumitem} %for itemize alphabetical
+\setlength\parindent{0pt} %no indent
+
+\title{Midterm 2020-2021 Sem 1}
+\author{Brendan Cheong Ern Jie}
+\date {12/02/2022}
+
+\begin{document}
+\maketitle
+
+\section{Question 01}
+\begin{enumerate}[label=(\alph*)]
+
+\item Code 1a)
+
+[1024]
+
+\item Code 1b)
+
+[here]
+
+\item Code 1c)
+
+[3.4]
+
+\item Code 1d)
+
+[This is just bubble sort
+Ans: 0024CShiisst]
+
+\item Code 1e)
+
+[sorting this phrase is just a,b,c,d .. z. So using lower bound is asking us index of f to first letter of sorted phrase which is 0 to 6 which is 7]
+
+\end{enumerate}
+
+\section{Question 02}
+\begin{enumerate}[label=(\alph*)]
+
+\item O(N $\log(N)$)
+
+
+\item O(1)
+
+\item O(N)
+
+\item O($N^2$)
+
+\item O($N\log(N)$)
+
+\end{enumerate}
+
+\section{Question 03}
+\begin{enumerate}[label=(\alph*)]
+
+\item 6! = 720 permuations
+
+\item 1 permutation
+
+\item No, using merge sort defats the purpose of using radix sort to achieve O($n + \frac{d}{k}$) time as it will always stick to O($N\log(N)$) time instead. Moreover, radix sort is already stable, so the additional merge sort really does nothing at all but makes the algorithm slower.
+
+\item I am mergeSort. No, other frequently used sorting algorithm like quicksort are used as well and have similar time complexities of O($N\log(N)$. Other sorting algorithms are used as we do not always need a stable sort like merge sort)
+\end{enumerate}
+
+\section{Question 04}
+\begin{enumerate}[label=(\alph*)]
+
+\item The fastest you can go is O(N). This is because you would have to iterate through the array to find each and every element in the single linked list and see if there are duplicates by adding them to a set. This takes O(N) time. When adding to set, you can check if the set already contains the element using set.count(i) where i is the element in O(log N) time. Thus, the time complexity would be O(N).
+
+\item Nothing will happen to the SLL implementation, as the element that is deleted has no other vertex pointing to it. Perhaps this will cause heap pollution and an eventual segmentation fault. 
+
+\item The proper data structure would be std::deque, as it already has operations for pushing to the top of the stack in the form of push\_front() and removing from the front in the form of pop\_front() as well as checking the front with front(). A fixed size array wouldn't work as the size of the stack changes with the number of elements place in it. Thus, std::deque supports the stack's Last In First Out data structure.
+
+\item The proper data structure would be fixed-size array, as the fixed size Array can fix its size and capacity at C, while the other data structures size would increase the more elements you place inside it
+
+\item HARD!!!!
+
+[Honestly, I would just implement 2 queues, one for strings and one for integers using std::queue. Then I would keep 2 boolean statements called int\_first, string\_first, depending on which was the most recently added element, like for say if the element was a int, then int\_first would be true and string\_first would be false, and vice versa if the added element was a string. Depending on the element type, it would be added to its respective queues based on its type. If dequeueString() is called, it will just call queue.pop\_front() from the string type queue, and if dequeueInteger() is called, it will call queue.pop\_front() fron the integer queue. If fornt() is called, it will peek() at the front of the queue depending on the most recent type based on the boolean statements.]
+
+
+\end{enumerate}
+
+\section{Question 05}
+\begin{enumerate}[label=(\alph*)]
+
+\item HARD!!!
+
+[-1, 5, 3, 2, 1, 4], so when 4 is immediately promoted to root after extracting 5, it can't go down
+
+\item I would first use ExtractMax().Remove(v) to check if the element exists or not. If it does not, IncreaseKey will not work. If it does exist, store the extracted max value in a variable call max\_variable. Now, insert the key using Insert(v + delta\_v). After that, add back the previously extracted max value with Insert(max\_variable). Note that we can't just use Remove(v) as it does not report back NULL if v does not exist.
+\end{enumerate}
+
+\section{Question 06}
+\begin{enumerate}[label=(\alph*)]
+
+\item HARD!!!
+
+1. create binary min heap from a[1..K] $\rightarrow$ O(K)
+\\
+2. for i = K+1, ..., N, extract min from that heap and insert a[i] to the heap $\rightarrow$ O((N-K)logK)
+\\
+3. the heap now contains the K largest elements, just perform heapsort $\rightarrow$ O(K log K) to sort the elements in the heap
+
+This algorithm's time complexity is in $O(N\log(K))$
+
+\item HARD!!!
+For each iteration of N, from i = 0 to N,
+\\
+1. create a binary min heap from i = 0 to j = i + k, where j can loop back round if j is > N where j = N - j, do this from [i..N]. This takes up O(K) times to create the heap
+\\
+2. extract the minimum from this heap of size K in $O(\log(K))$ time and store it in an int called max\_int
+\\
+3. If the minimum from the heap is bigger than max\_int, replace max\_int with the new number. repeat this K times until the heap is empty, this takes up $O(\log(K))$
+\\
+4. repeat this is N times, thus the overall time complexity is $O(NK + N \log(K))$ which translates to $\rightarrow$ $O(N \log(K))$ 
+
+
+
+
+\end{enumerate}
+
+\end{document}
