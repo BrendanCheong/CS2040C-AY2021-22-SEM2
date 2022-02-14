@@ -37,10 +37,10 @@ int main()
             switch (letter) {
             case('<'):
                 if (index != 0) {
-                    list<char>::iterator temp = pointer;
-                    --temp;
+                    list<char>::iterator temp = pointer; // pointer auto adjusts with change in list
+                    temp = prev(temp, 1);
                     arr.erase(temp);
-                    --index;
+                    index -= 1;
                 }
                 break;
             case('['):

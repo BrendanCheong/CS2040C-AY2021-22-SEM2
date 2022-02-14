@@ -69,7 +69,7 @@ int main()
         ll startingNumber = door.getStartingNumber();
 
         door.evaluateNumber(ele);
-        if (ele > startingNumber) { // only complete the door when we find a higher number to be a bridge
+        if (ele >= startingNumber) { // only complete the window when we find a higher or equal height to build a bridge
             // find what is my current max_jump
             ll maxJump = door.getJump();
             if (maxJump > answerForward) {
@@ -92,7 +92,7 @@ int main()
         ll startingNumber = window.getStartingNumber();
 
         window.evaluateNumber(ele);
-        if (ele > startingNumber) { // only complete the window when we find a higher number to be a bridge
+        if (ele >= startingNumber) { // only complete the window when we find a higher or equal height to build a bridge
             // find what is my current max_jump
             ll maxJump = window.getJump();
             if (maxJump > answerBackward) {
