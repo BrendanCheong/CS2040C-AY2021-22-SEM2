@@ -1,0 +1,229 @@
+\documentclass{article}
+\usepackage{fullpage} %for 1-inch margins
+\usepackage{fancyvrb} %For code blocks
+\usepackage{lmodern}
+\fvset{tabsize=4} %Set indentation to 4
+\usepackage{enumitem} %for itemize alphabetical
+\setlength\parindent{0pt} %no indent
+
+\title{Midterm CS2040C Sem 1 2021-2022}
+\author{Brendan Cheong Ern Jie}
+\date {08/02/2022}
+
+\begin{document}
+\maketitle
+
+\section{Question 01}
+\begin{enumerate}[label=(\arabic*)]
+\item What will be printed if we run that code? (any answer with the first two most significant digits correct will be accepted)
+
+[$N \times \log_2(N) \times 2$ \rightarrow 2048 \times 11 \times 2 = 45056]
+
+\item What is the time complexity of the code above in terms of N?
+
+[O(N \log(N))]
+
+\item If N in line 5 is changed to 1000000 (1 Million), do you think your code can run in less
+than 1s if your computer can do 100 Million basic operations in 1s? Write Y/N in the
+box:
+
+[N]
+
+\item If the comment "//" in line 8 is removed so that line 8 is part of the code, will the time
+complexity that you have answered in part 2 changes? Write Y/N in the box:
+
+[N]
+
+\item  If line 10 is changed to for (int k = 0; k $<$ N; ++k), the time complexity of the code
+above in terms of N changes into O(5) 
+
+[$N^2\log(N)$]
+
+\end{enumerate}
+
+\section{Question 02}
+\begin{enumerate}[label=(\arabic*)]
+
+\item \begin{verbatim}
+#include <1>
+\end{verbatim}
+
+[algorithm]
+
+\item \begin{verbatim} 
+for (auto 2name : names)
+\end{verbatim}
+
+[\&]
+
+\item \begin{verbatim} 
+std::sort(names.3(), names.end(), [](const std::string &a, const std::string &b) {}
+\end{verbatim}
+
+[begin]
+
+\item \begin{verbatim}
+if (a.length() 4 b.length())
+\end{verbatim}
+
+[$!=$]
+
+\item \begin{verbatim}
+return a.length() 5 b.length();
+\end{verbatim}
+
+[$<$]
+
+\end{enumerate}
+
+\section{Question 03}
+
+\begin{enumerate}[label=(\arabic*)]
+\item Choose the Data Structure to be used
+
+\begin{verbatim}
+std::vector
+\end{verbatim}
+
+\item How do you implement add(v)
+
+[using the vector method \begin{verbatim} push_back(v)\end{verbatim} with the input being the element. This method
+implementation has a O(1) time complexity]
+
+\item How do you implement count()
+
+[using the vector method size() with the output being the size of the vector or the number of items in the ADT. The time
+complexity will be O(1)]
+
+\item How do you implement returnAnyWithEqualProbability()
+
+[let the index be: \begin{verbatim}
+int index = rand() % size();
+\end{verbatim}
+where this will randomly choose an index within the size of the ADT. Then once the index is found, use the STL vector in built \begin{verbatim} 
+vector.remove(index);
+\end{verbatim}
+Finding the random index is O(1) while removing the element is O(N)
+]
+
+\end{enumerate}
+
+\section{Question 04}
+
+\item What time complexity?
+
+[O($N^2$)]
+
+\section{Question 05}
+
+\item What is the time complexity?
+
+[O(N)]
+
+\section{Question 06}
+
+\item What is the time complexity?
+
+[O($N\log(N)$)]
+
+\section{Question 07}
+
+\item What is the time complexity?
+
+[O($N^2$)]
+
+\section{Question 08}
+
+\item explain how newSort() works and why it can sort properly (HARD)
+
+[Now the Quicksort doesn't sort the whole array entirely, leaving some portions of it unsorted. Thus, with the addition
+of insertionSort, it will sort the rest of the array in O(K) times, meaning the time complexity is
+$O((N - K)\log(N- K) + K)$]
+
+\section{Question 09}
+\begin{enumerate}
+\item What is the time complexity?
+
+[O($N^2$)]
+
+\item What is the time complexity?
+
+[O($N \log(N)$)]
+\end{enumerate}
+
+\section{Question 10}
+
+\item What is the expected time complexity of newSort() in terms of K (that can range from 1 to N) and N? (HARD)
+
+[The expected time complexity of newSort() in terms of K is $O((N-K)\log(N-K) + K^2$. This is because the worst
+case scenario to sort K elements for insertion sort is $O(K^2)$ while the quick sort sorts the rest of the elements that K missed out which is $(N-K)\log(N-K)$ so combined together its $O((N-K)\log(N-K) + K^2$]
+
+\section{Question 11}
+\begin{enumerate}[label=(\arabic*)]
+\item Fill In the Blanks
+
+[1]
+\item Fill In the Blanks
+
+[3]
+\item Fill In the Blanks
+
+[9]
+\item Fill In the Blanks
+
+[7]
+\item Fill In the Blanks
+
+[N]
+\end{enumerate}
+
+\section{Question 12}
+\begin{verbatim}
+#include <iostream>
+#include <algorithm> // blanks
+#include <vector>
+#include <utility>
+#include <unordered_map>
+
+using namespace std;
+typedef pair<int, int> pii;
+typedef pair<int, pii> pip;
+typedef unordered_map<int, pii> mip; // {value, {firstOccur, count}}
+
+int main() {
+    int N, K; cin >> N >> K; // 1 <= N <= 1M, 1 <= K <= N
+
+    mip map;
+    for (int i  = 0; i < N; ++i) { // O(N) here
+        int v; cin >> v;
+        if (map.find(v) != map.end()) {
+            ++map[v].second;
+        } else {
+            map[v] = {i, 1};
+        }
+    }
+
+    vector<pip> A;
+    for (auto &e : map) {
+        A.push_back({e.first, e.second});
+    }
+
+    // sort
+    sort(A.begin(), A.end(), [](pip &a, pip &b){ // {value, {firstOccur, count}}
+        if (a.second.second != b.second.second) {
+            return a.second.second > b.second.second;
+        } else {
+            return a.second.first < b.second.first;
+        }
+    });
+
+    for (auto a : A) {
+        for (auto i = 0; i < a.second.second; ++i)
+            cout << a.first << " ";
+    }
+    cout << endl;
+    return 0;
+}
+\end{verbatim}
+[the overall time complexity of my C++ code above is $O(N + N2 \log(N2))$, where N2is the number of unique numbers in N inputs]
+\end{document}
