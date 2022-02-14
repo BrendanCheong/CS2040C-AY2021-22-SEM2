@@ -11,26 +11,101 @@ using namespace std;
 using ll = long long;
 using ull = unsigned long long int;
 
+class SlidingDoor {
+
+private:
+    ll MAX_JUMP = 0;
+    ll startingNumber;
+
+public:
+
+    SlidingDoor() {}
+
+    void setStartingNumber(ll startingNumber) {
+        this->startingNumber = startingNumber;
+    }
+
+    void evaluateNumber(ll number) {
+        ll distance = startingNumber - number;
+        if (startingNumber > number && distance > MAX_JUMP) {
+            this->MAX_JUMP = distance;
+        }
+    }
+
+    ll getJump() {
+        return this->MAX_JUMP;
+    }
+
+    ll getStartingNumber() {
+        return this->startingNumber;
+    }
+};
+
 int main()
 {
     // freopen("in.txt", "r", stdin);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // in this case we need to have a stack of integers
-    // create a varaible called answer = 0;
-    // given a stream of numbers, start the first number as the begining of the stack
-    // then keep adding on to this UNTIL we find a number BIGGER THAN THE BEGINING
-    // during that, we will find the min number, the min number IS NOT THE BEGINING and NOT THE number thats BIGGER THAN THE BEGINING.
-    // The min number starts of as 0, create another variable called AMOUNT_IN_STACK.
-    // if AMOUNT_IN_STACK = 0, then return 0 as there is no bridge
-    // else, keep updating the min number and ++AMOUNT_IN_STACK.
-    // when we find a number that is BIGGER THAN THE BEGINING, simply take BEGINING - min number, and if answer < that equation, make answer = equation.
-    // now the begining number = BIGGER THAN THE BEGINING and repeat the process.
+    ll N, ele;
+    ll answerForward = 0; ll answerBackward = 0;
+    bool doorOpen = true;
+    vector<ll> arr;
+    cin >> N;
 
-    // DO THE SAME thing once N is finished BUT BACKWARDS.
+    if (N <= 2) { // O(1)
+        cout << answerForward << endl;
+        return 0;
+    }
 
-    // create a class to do this, it handles this "sliding door", this "sliding door" only changes the answer if answer < that equation
+    SlidingDoor door;
+    cin >> ele;
+    arr.push_back(ele);
+    door.setStartingNumber(ele);
+    for (size_t _ = 0; _ < N - 1; ++_) {
+        cin >> ele;
+        arr.push_back(ele);
+
+        ll startingNumber = door.getStartingNumber();
+
+        door.evaluateNumber(ele);
+        if (ele > startingNumber) { // only complete the door when we find a higher number to be a bridge
+            // find what is my current max_jump
+            ll maxJump = door.getJump();
+            if (maxJump > answerForward) {
+                answerForward = maxJump;
+                //cout << "Current Max Jump is: " << maxJump << '\n';
+            }
+            door.setStartingNumber(ele);
+        }
+
+        //cout << ele << " starting Number is: " << startingNumber << " max jump is: " << door.getJump() << '\n';
+    }
+
+    // get the last element of arr
+    ll lastElement = arr[N - 1];
+    SlidingDoor window;
+    window.setStartingNumber(lastElement);
+    // iterate backwards from the arr starting with the second last element
+    for (vector<ll>::reverse_iterator it = arr.rbegin() + 1; it != arr.rend(); ++it) {
+        ll ele = *it;
+        ll startingNumber = window.getStartingNumber();
+
+        window.evaluateNumber(ele);
+        if (ele > startingNumber) { // only complete the window when we find a higher number to be a bridge
+            // find what is my current max_jump
+            ll maxJump = window.getJump();
+            if (maxJump > answerBackward) {
+                answerBackward = maxJump;
+                //cout << "Current Max Jump is: " << maxJump << '\n';
+            }
+            window.setStartingNumber(ele);
+        }
+    }
+
+
+    //cout << "answerForward: " << answerForward << " answerBackward: " << answerBackward << '\n';
+    cout << max(answerForward, answerBackward);
 
     return 0;
 }
