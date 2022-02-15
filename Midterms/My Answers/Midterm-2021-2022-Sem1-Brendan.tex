@@ -17,7 +17,7 @@
 \begin{enumerate}[label=(\arabic*)]
 \item What will be printed if we run that code? (any answer with the first two most significant digits correct will be accepted)
 
-[$N \times \log_2(N) \times 2$ \rightarrow 2048 \times 11 \times 2 = 45056]
+[$N \times \log_2(2N) \times 2$ \rightarrow 2048 \times 12 \times 2 = 49152]
 
 \item What is the time complexity of the code above in terms of N?
 
@@ -112,7 +112,7 @@ Finding the random index is O(1) while removing the element is O(N)
 
 \item What time complexity?
 
-[O($N^2$)]
+[O(N)]
 
 \section{Question 05}
 
@@ -130,7 +130,7 @@ Finding the random index is O(1) while removing the element is O(N)
 
 \item What is the time complexity?
 
-[O($N^2$)]
+[O($N^2$), because we have no tail, we must traverse until we find the end]
 
 \section{Question 08}
 
@@ -144,19 +144,21 @@ $O((N - K)\log(N- K) + K)$]
 \begin{enumerate}
 \item What is the time complexity?
 
-[O($N^2$)]
+[O($N^2$), since K is large, we reach once high-low+1 $<=$ K very early and have to resort to insertion Sort]
 
 \item What is the time complexity?
 
-[O($N \log(N)$)]
+[O($N \log(N)$), since K is very small, we are always high-low+1 $>$ K and we keep recursing, resulting in mostly quickSort all the way]
 \end{enumerate}
 
 \section{Question 10}
 
 \item What is the expected time complexity of newSort() in terms of K (that can range from 1 to N) and N? (HARD)
-
-[The expected time complexity of newSort() in terms of K is $O((N-K)\log(N-K) + K^2$. This is because the worst
-case scenario to sort K elements for insertion sort is $O(K^2)$ while the quick sort sorts the rest of the elements that K missed out which is $(N-K)\log(N-K)$ so combined together its $O((N-K)\log(N-K) + K^2$]
+\\
+\\
+[from O($N(\log(N) - \log(K)$), we only quick sort a portion of the array. Whats that portion you may ask? why thats $N-K$. Thus, we quicksort  O($N(\log(N) - \log(K)$) = O($N\log(\frac{N}{K})$). When partioning, we have to multiply by $O(N)$. Next, we insertionSort the rest of whats left, which is $length <= K$ For each element it's correct location must be in the same subarray. So each element is at most K swaps away from correct position. Thus, O($NK$) for insertion sort.
+\\
+Therefore answer is: O($N\log(\frac{N}{K}) + NK$)]
 
 \section{Question 11}
 \begin{enumerate}[label=(\arabic*)]
