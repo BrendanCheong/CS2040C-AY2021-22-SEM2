@@ -14,25 +14,34 @@ unsigned long long int random(int min, int max) //range : [min, max]
 
 // https://visualgo.net/en/sorting?slide=7-1
 void bubbleSort(int a[], int N) { // the standard version
-    for (; N > 0; --N) // N iterations
-        for (int i = 0; i < N - 1; ++i) // except the last, O(N)
+    for (; N > 0; --N) // N iterations // !O(N)
+        for (int i = 0; i < N - 1; ++i) // except the last, //!O(N)
             if (a[i] > a[i + 1]) // not in non-decreasing order
                 swap(a[i], a[i + 1]); // swap in O(1)
+    //!total O(N^2)
 }
 
 // https://visualgo.net/en/sorting?slide=11-2
-void merge(int a[], int low, int mid, int high) {
+void merge(int a[], int low, int mid, int high) { // !O(N)
     // subarray1 = a[low..mid], subarray2 = a[mid+1..high], both sorted
     int N = high - low + 1;
     int b[N]; // discuss: why do we need a temporary array b?
+    // need temp array to merge so that we have subarrays that we can merge into a sorted array.
     int left = low;
     int right = mid + 1;
     int bIdx = 0;
-    while (left <= mid && right <= high) // the merging
-        b[bIdx++] = (a[left] <= a[right]) ? a[left++] : a[right++];
-    while (left <= mid) b[bIdx++] = a[left++]; // leftover, if any
-    while (right <= high) b[bIdx++] = a[right++]; // leftover, if any
-    for (int k = 0; k < N; ++k) a[low + k] = b[k]; // copy back
+    while (left <= mid && right <= high) {// the merging, note that the sub arrays are already sorted, so we just pick the minimum one
+        b[bIdx++] = (a[left] <= a[right])
+            ? a[left++]
+            : a[right++];
+    }
+    while (left <= mid) {
+        b[bIdx++] = a[left++]; // leftover, if any
+    }
+    while (right <= high) {
+        b[bIdx++] = a[right++]; // leftover, if any
+    }
+    for (int k = 0; k < N; ++k) a[low + k] = b[k]; // copy back //!O(N)
 }
 
 // https://visualgo.net/en/sorting?slide=11-5
@@ -40,9 +49,10 @@ void mergeSort(int a[], int low, int high) {
     // the array to be sorted is a[low..high]
     if (low < high) { // base case: low >= high (0 or 1 item)
         int mid = (low + high) / 2;
-        mergeSort(a, low, mid); // divide into two halves
-        mergeSort(a, mid + 1, high); // then recursively sort them
-        merge(a, low, mid, high); // conquer: the merge routine
+        mergeSort(a, low, mid); // divide into two halves // ! O(log N) Goes left
+        mergeSort(a, mid + 1, high); // then recursively sort them // ! O(log N) Goes right
+        merge(a, low, mid, high); // conquer: the merge routine // ! O(N)
+        //! total O(N log N)
     }
 }
 
@@ -56,7 +66,7 @@ int partition(int a[], int i, int j) {
     int m = i; // S1 and S2 are initially empty
     for (int k = i + 1; k <= j; ++k) { // explore the unknown region
         if ((a[k] < p) || ((a[k] == p) && (rand() % 2 == 0))) { // case 2 (PATCHED solution to avoid TLE O(N^2) on input array with identical values)
-            ++m;
+            ++m; //! NOTE: not stable because we swap elements, so theres a chance the original ordering gets swapped
             swap(a[k], a[m]); // C++ STL algorithm std::swap
         } // notice that we do nothing in case 1: a[k] > p
     }
@@ -125,12 +135,13 @@ void partition3way(int a[], int l, int r) {
 // https://visualgo.net/en/sorting?slide=12-8
 void quickSort(int a[], int low, int high) {
 
-    if (high - low + 1 > 5) {
-        int pivotIdx = partition(a, low, high); // O(N)
-        // a[low..high] ~> a[low..pivotIdxÃ¢â‚¬â€œ1], pivot, a[pivotIdx+1..high]
-        quickSort(a, low, pivotIdx - 1); // recursively sort left subarray
+    if (low < high) {
+        int pivotIdx = partition(a, low, high); //! O(N)
+        // a[low..high] ~> a[low..pivotIdx], pivot, a[pivotIdx+1..high]
+        quickSort(a, low, pivotIdx - 1); // recursively sort left subarray //! O(log N)
         // a[pivotIdx] = pivot is already sorted after partition
-        quickSort(a, pivotIdx + 1, high); // then sort right subarray
+        quickSort(a, pivotIdx + 1, high); // then sort right subarray //! O(log N)
+        //! altogether is O(N log N)
     }
 }
 vector<double> QuickSort(vector<double>& vec1) {
@@ -183,41 +194,92 @@ vector<double> QuickSort(vector<double>& vec1) {
     }
     return vec1;
 }
-// function to perform the above algorithm
-void beadSort(int data[], int count) {
-    // Find the maximum element
-    int i, j, max, sum;
-    unsigned char* beads;
 
-    for (i = 1, max = data[0]; i < count; ++i)
-        if (data[i] > max)
-            max = data[i];
+void countSort(int array[], int size) {
+    // The size of count must be at least the (max+1) but
+    // we cannot assign declare it as int count(max+1) in C++ as
+    // it does not support dynamic memory allocation.
+    // So, its size is provided statically.
+    int output[10];
+    int count[10];
+    int max = array[0];
 
-    beads = (unsigned char*)calloc(1, max * count);
-
-    for (i = 0; i < count; ++i)
-        for (j = 0; j < data[i]; ++j)
-            beads[i * max + j] = 1;
-
-    for (j = 0; j < max; ++j)
-    {
-        for (sum = i = 0; i < count; ++i)
-        {
-            sum += beads[i * max + j];
-            beads[i * max + j] = 0;
-        }
-
-        for (i = count - sum; i < count; ++i)
-            beads[i * max + j] = 1;
+    // Find the largest element of the array
+    for (int i = 1; i < size; i++) {
+        if (array[i] > max)
+            max = array[i];
     }
 
-    for (i = 0; i < count; ++i)
-    {
-        for (j = 0; j < max && beads[i * max + j]; ++j);
-        data[i] = j;
+    // Initialize count array with all zeros.
+    for (int i = 0; i <= max; ++i) {
+        count[i] = 0;
     }
 
-    free(beads);
+    // Store the count of each element
+    for (int i = 0; i < size; i++) {
+        count[array[i]]++;
+    }
+
+    // Store the cummulative count of each array
+    for (int i = 1; i <= max; i++) {
+        count[i] += count[i - 1];
+    }
+
+    // Find the index of each element of the original array in count array, and
+    // place the elements in output array
+    for (int i = size - 1; i >= 0; i--) {
+        output[count[array[i]] - 1] = array[i];
+        count[array[i]]--;
+    }
+
+    // Copy the sorted elements into original array
+    for (int i = 0; i < size; i++) {
+        array[i] = output[i];
+    }
+}
+
+// Using counting sort to sort the elements in the basis of significant places
+void countingSort(int array[], int size, int place) {
+    const int max = 10; // max 10 is a limiter for the number of digits
+    int output[size];
+    int count[max];
+
+    for (int i = 0; i < max; ++i)
+        count[i] = 0;
+
+    // Calculate count of elements
+    for (int i = 0; i < size; i++)
+        count[(array[i] / place) % 10]++;
+
+    // Calculate cumulative count
+    for (int i = 1; i < max; i++)
+        count[i] += count[i - 1];
+
+    // Place the elements in sorted order
+    for (int i = size - 1; i >= 0; i--) {
+        output[count[(array[i] / place) % 10] - 1] = array[i];
+        count[(array[i] / place) % 10]--;
+    }
+
+    for (int i = 0; i < size; i++)
+        array[i] = output[i];
+}
+int getMax(int array[], int n) {
+    int maximum = array[0];
+    for (int i = 1; i < n; i++)
+        if (array[i] > maximum)
+            maximum = array[i];
+    return maximum;
+}
+// Main function to implement radix sort
+void radixsort(int array[], int size) {
+
+    // Get maximum element
+    int max = getMax(array, size);
+
+    // Apply counting sort to sort elements based on place value.
+    for (int place = 1; max / place > 0; place *= 10)
+        countingSort(array, size, place);
 }
 
 // to be used by various sorting algorithms
