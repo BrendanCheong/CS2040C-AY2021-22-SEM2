@@ -1,0 +1,10 @@
+4
+string
+substring
+substrate
+submarine
+4
+string
+substr
+sub
+ring
