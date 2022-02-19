@@ -34,7 +34,6 @@ g++ -o main.out --std c++17 main.cpp
  * Lab: 10
  * TA: Fidella Widjojo
 */
-#include <iostream>
 #include <bits/stdc++.h>
 
 using namespace std;
