@@ -11,7 +11,7 @@ using ll = long long;
 using ull = unsigned long long int;
 
 struct Vertex { // we can use either C struct or C++/Python/Java class
-    ll item; // the data is stored here, an integer in this example
+    char item; // the data is stored here, an integer in this example
     Vertex* next; // this pointer tells us where is the next vertex
     Vertex* prev; // this pointer tells us where is the previous vertex
 };
@@ -33,7 +33,7 @@ public:
     }
 
     // create a function that inserts a new vertex at the head and updates vertex accordingly
-    void InsertAtHead(ll v) {
+    void InsertAtHead(char v) {
         Vertex* vtx = new Vertex();
         vtx->item = v;
         vtx->next = this->head;
@@ -51,7 +51,7 @@ public:
     }
 
     // create a function that inserts a new vertex at the tail and updates vertex accordingly
-    void InsertAtTail(ll v) {
+    void InsertAtTail(char v) {
         Vertex* vtx = new Vertex();
         vtx->item = v;
         vtx->next = NULL;
@@ -68,8 +68,7 @@ public:
         this->curr_index = size - 1;
     }
 
-    void InsertAtCurrentVertex(ll v) {
-
+    void InsertAtCurrentVertex(char v) {
         if (this->current == NULL || this->current == tail) {
             InsertAtTail(v);
             return;
@@ -110,19 +109,19 @@ public:
         --size;
     }
 
-    ll GetHead() {
+    char GetHead() {
         if (head == NULL)
             return -1; // avoid crashing when DLL is empty
         return head->item;
     }
 
-    ll GetTail() {
+    char GetTail() {
         if (tail == NULL)
             return -1; // avoid crashing when DLL is empty
         return tail->item;
     }
 
-    ll GetCurrent() {
+    char GetCurrent() {
         if (current == NULL)
             return -1; // avoid crashing when DLL is empty
         return current->item;
@@ -163,7 +162,7 @@ public:
         --size;
     }
 
-    void Insert(ll index, ll v) { // O(n)
+    void Insert(ll index, char v) { // O(n)
         if (index < 0 || index > size) {
             cout << "Invalid index\n";
             return;
@@ -190,7 +189,7 @@ public:
         ++size;
     }
 
-    void Remove(ll index, ll v) { // O(n)
+    void Remove(ll index) { // O(n)
         if (index < 0 || index > size) {
             cout << "Invalid index\n";
             return;
@@ -226,10 +225,16 @@ public:
         this->curr_index = index;
     }
 
+    void SetCurrentVertex(bool head) {
+        head
+            ? this->current = this->head
+            : this->current = this->tail;
+    }
+
     void printList() {
         Vertex* temp = head;
         while (temp != NULL) {
-            cout << temp->item << "->";
+            cout << temp->item;
             temp = temp->next;
         }
         cout << endl;
@@ -257,35 +262,42 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    DLL dl;
-
-    dl.InsertAtHead(5);
-    dl.InsertAtTail(2);
-    dl.InsertAtHead(7);
-    dl.printList();
-    dl.printCurrent();
-    dl.InsertAtCurrentVertex(1);
-    dl.InsertAtCurrentVertex(3);
-    dl.DeleteCurrentVertex();
-    dl.InsertAtCurrentVertex(9);
-    dl.printList();
-    cout << dl.GetSize() << '\n';
-
-    dl.ClearList();
-
-    dl.InsertAtHead(1);
-    dl.printList();
-    dl.InsertAtCurrentVertex(4);
-    dl.InsertAtCurrentVertex(5);
-    dl.InsertAtCurrentVertex(6);
-    dl.InsertAtCurrentVertex(7);
-    dl.InsertAtHead(8);
-    dl.InsertAtCurrentVertex(2);
-    // cout << dl.GetCurrent() << '\n';
-    dl.DeleteCurrentVertex();
-    dl.DeleteCurrentVertex();
-    dl.InsertAtCurrentVertex(9);
-    dl.printList();
+    ll T = 0;
+    string input;
+    cin >> T;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    for (size_t i = 0; i < T; ++i) {
+        getline(cin, input);
+        ll index = 0;
+        DLL list;
+        bool headful = false;
+        for (char letter : input) {
+            switch (letter) {
+            case('<'):
+                if (index != 0) {
+                    list.DeleteCurrentVertex();
+                    index -= 1;
+                }
+                break;
+            case('['):
+                headful = true;
+                index = 0;
+                break;
+            case(']'):
+                list.SetCurrentVertex(false);
+                index = list.GetSize();
+                break;
+            default:
+                headful
+                    ? list.InsertAtHead(letter)
+                    : list.InsertAtCurrentVertex(letter);
+                headful = false;
+                ++index;
+                break;
+            }
+        }
+        list.printList();
+    }
 
     return 0;
 }
