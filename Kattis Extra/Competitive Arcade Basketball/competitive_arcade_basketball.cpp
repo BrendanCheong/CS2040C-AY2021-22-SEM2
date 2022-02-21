@@ -1,33 +1,3 @@
-# CS2040C-AY2021-22-SEM2
-Ya boy is back at it again with another CS mod
-
-## Compiling and Running Code
-
-### Java
-
-```
-javac Java/*.java
-java -cp Java/ Main < test.in
-```
-
-### Python
-
-```
-python3.10 Python/Main.py
-```
-
-### C++
-
-```
-g++ -o main.out --std c++17 main.cpp
-./main.out < test.in
-
-# main being the name of the desired file name
-```
-
-# Boilerplate 
-
-```cpp
 /**
  * Matric: A0217988E
  * Name: Brendan Cheong Ern Jie
@@ -50,5 +20,3 @@ int main()
 
     return 0;
 }
-
-```

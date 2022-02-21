@@ -11,6 +11,14 @@ using namespace std;
 using ll = long long;
 using ull = unsigned long long int;
 
+void printVec(vector<ll>& arr) {
+    cout << '[';
+    for (auto& i : arr) {
+        cout << i << ", ";
+    }
+    cout << ']' << endl;
+}
+
 int main()
 {
     // freopen("in.txt", "r", stdin);
@@ -21,41 +29,35 @@ int main()
 
     cin >> T;
 
-    for (size_t i = 0; i < T; ++i) {
-        ll N = 0;
-        cin >> N;
+    for (size_t i = 0; i < T; ++i) { // O(T)
+        ll N = 0; cin >> N;
         vector<ll> arr;
-        ll ans;
-
-        for (size_t j = 0; j < N; ++j) {
-            ll number = 0;
-            cin >> number;
-            arr.push_back(number);
-
-            ll sizeOfArr = arr.size();
-
-            if (sizeOfArr == 1) {
-                ans += number;
-                break;
-            }
-            else if (sizeOfArr == 2) {
-                ans += arr[0] + arr[1];
-            }
-
-            if (sizeOfArr % 2 != 0) {
-                ans += arr[sizeOfArr / 2];
+        ll ans = 0;
+        ll starter = 0;
+        for (size_t i = 0; i < N; i++) { //O(N)
+            ll num; cin >> num;
+            arr.push_back(num);
+            sort(arr.begin(), arr.end()); //O(N log N)
+            ll size = arr.size();
+            if (size % 2 == 0) {
+                ll first = arr[starter];
+                ll second = arr[starter + 1];
+                //cout << "even: " << first << ", " << second << endl;
+                // cout << starter << ' ' << starter + 1 << endl;
+                // printVec(arr);
+                ans += (first + second) / 2;
+                ++starter;
             }
             else {
-                int first = arr[(sizeOfArr / 2) - 1];
-                int second = arr[sizeOfArr / 2];
-                ans += (first + second) / 2;
+                //cout << "odd: " << arr[starter] << endl;
+                // cout << starter << endl;
+                // printVec(arr);
+                ans += arr[starter];
             }
         }
-
         cout << ans << '\n';
-
+        starter = 0;
     }
-
 
     return 0;
 }
