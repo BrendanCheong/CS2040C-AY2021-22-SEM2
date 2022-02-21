@@ -70,7 +70,7 @@ int main()
                 string topCat = top.name;
                 // check if topCat is in the map
                 if (clinic.find(topCat) != clinic.end() && clinic[topCat].infection == top.infection) { // O(log(C)) find
-                    cout << topCat << endl;
+                    cout << topCat << '\n';
                     break;
                 }
                 else {
@@ -78,7 +78,7 @@ int main()
                 }
             }
             if (pq.empty())
-                cout << "The clinic is empty" << endl;
+                cout << "The clinic is empty" << '\n';
             // total O(N log(C))
         }
     }
