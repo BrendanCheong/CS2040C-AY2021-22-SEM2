@@ -30,7 +30,7 @@ int main()
         if (first.infection == second.infection)
             return first.arrival > second.arrival; // pick lowest arrival time because we will use index
         else
-            return first.infection < second.infection;
+            return first.infection < second.infection; // pick higher infection level
     };
     priority_queue<Cat, vector<Cat>, decltype(comp)> pq(comp);
     cin >> N;
