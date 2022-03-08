@@ -18,6 +18,7 @@ ll solve(map<ll, pq<ll>>& dict, ll X) {
     ll count = 0;
     while (!dict.empty()) { // Repeat steps with remaining amount of energy, until energy left becomes 0, or there are no more quests to be cleared
         auto it = dict.lower_bound(X); // find the first occurence of the energy level which is equal or just smaller than X, MAY NOT be exact
+        // !NOTE: I can only do this for ordered map due to ordering of keys that are sorted, resulting in O(log N) find
         if (it == dict.end())
             it = prev(it, 1); // if at the end, no quests has energy required equal or bigger than X
         ll energy = it->first;
