@@ -1,5 +1,6 @@
-#include <bits/stdc++.h>
+#include <bits/extc++.h>
 using namespace std;
+using namespace __gnu_pbds;
 
 template <typename T1, typename T2>
 class hash_table { // this is an attempt to emulate unordered_map<string, int> ht_stl;
@@ -31,21 +32,21 @@ public:
     }
 
     ~hash_table() { // O(M)
-        for (int i = 0; i < M; ++i)
+        for (int i = 0; i < M; ++i) // O(M) prevent memory leak
             underlying_table[i].clear();
     }
 
     void insert(pair<T1, T2> key_value) { // O(1+alpha), to emulate ht_stl[key] = value or ht_stl.insert({key, value})
         auto& [key, value] = key_value; // decompose into key and value
         bool contains_key = false;
-        for (auto& [k, v] : underlying_table[hash_function(key)])
+        for (auto& [k, v] : underlying_table[hash_function(key)]) // O(1 + alpha) to find, N is predicted size and M is acutal size, to achieve a prime number M for low alpha
             if (k == key) { // if there is an existing key
                 contains_key = true;
                 v = value; // update the satellite data, notice that we use pass by reference '&' above
             }
 
         if (!contains_key) { // no previous key before
-            underlying_table[hash_function(key)].emplace_back(key, value); // just append at the back
+            underlying_table[hash_function(key)].emplace_back(key, value); // just append at the back O(1)
             ++total;
         }
     }
@@ -62,7 +63,7 @@ public:
     void erase(T1 key) { // O(1+alpha), to emulate ht_stl.erase(key)
         auto& row = underlying_table[hash_function(key)]; // get the reference of the row, notice that we use pass by reference '&' (VERY IMPORTANT)
 
-        for (auto it = row.begin(); it != row.end(); ++it)
+        for (auto it = row.begin(); it != row.end(); ++it) // modify linked list
             if (it->first == key) { // if there is an existing key
                 row.erase(it); // erase this (key, value) pair from this vector
                 --total;

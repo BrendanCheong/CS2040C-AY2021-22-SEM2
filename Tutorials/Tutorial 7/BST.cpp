@@ -8,7 +8,8 @@ struct BSTVertex {
     BSTVertex* left;
     BSTVertex* right;
     int key;
-    int height; // will be used in AVL lecture
+    int freq_of_key
+        int height; // will be used in AVL lecture
 };
 
 // This is just a sample implementation
@@ -68,7 +69,7 @@ protected:
         else                  return search(T->left, v); // search to the left
     }
 
-    T1 successor(BSTVertex* T) {                   // find the successor of T->key
+    T1 successor(BSTVertex* T) {                   //! find the successor of T->key, essentially its upper_bound(e)
         if (T->right != NULL)                        // we have right subtree
             return findMin(T->right);                  // this is the successor
         else {
@@ -97,7 +98,7 @@ protected:
         }
     }
 
-    T1 predecessor(BSTVertex* T) {                 // find the predecessor of T->key
+    T1 predecessor(BSTVertex* T) {                 // !find the predecessor of T->key, essentially its lower_bound(e)
         if (T->left != NULL)                         // we have left subtree
             return findMax(T->left);                   // this is the predecessor
         else {
