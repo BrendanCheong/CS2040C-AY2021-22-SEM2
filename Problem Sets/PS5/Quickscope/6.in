@@ -1,0 +1,13 @@
+12
+{
+DECLARE x abc
+TYPEOF x
+}
+{
+TYPEOF x
+DECLARE x abc
+DECLARE y abc
+TYPEOF x
+TYPEOF y
+DECLARE y abc
+}

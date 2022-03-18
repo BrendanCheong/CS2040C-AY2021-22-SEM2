@@ -1,0 +1,7 @@
+6
+{
+DECLARE a int
+DECLARE b int
+DECLARE a float
+TYPEOF b
+}

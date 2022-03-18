@@ -1,0 +1,54 @@
+53
+{
+    DECLARE a float
+    {
+        DECLARE a int
+        DECLARE b double
+    }
+    {
+        TYPEOF a
+        TYPEOF b
+    }
+    {
+        DECLARE c string
+        DECLARE d date
+        {
+            {
+                DECLARE d char
+                {
+                    {
+                        {
+                            {
+                                {
+                                    {
+                                        {
+                                            {
+                                                {
+                                                    {
+                                                        {
+                                                            TYPEOF c
+                                                        }
+                                                        {
+                                                            TYPEOF d
+                                                            TYPEOF g
+                                                        }
+                                                        {
+                                                            TYPEOF c
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            {
+                TYPEOF d
+            }
+        }
+    }
+}

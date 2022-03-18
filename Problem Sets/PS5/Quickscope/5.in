@@ -1,0 +1,19 @@
+18
+{
+DECLARE x a
+{
+DECLARE x b
+{
+{
+DECLARE x c
+{
+TYPEOF x
+}
+TYPEOF x
+}
+}
+TYPEOF x
+}
+TYPEOF x
+}
+TYPEOF x

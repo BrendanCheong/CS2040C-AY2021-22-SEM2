@@ -1,0 +1,17 @@
+16
+DECLARE apple int
+DECLARE banana double
+{
+DECLARE apple float
+DECLARE orange char
+TYPEOF apple
+TYPEOF banana
+TYPEOF orange
+}
+TYPEOF apple
+TYPEOF banana
+TYPEOF orange
+DECLARE orange char
+TYPEOF orange
+DECLARE banana char
+TYPEOF banana

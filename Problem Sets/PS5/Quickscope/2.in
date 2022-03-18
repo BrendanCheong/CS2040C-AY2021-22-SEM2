@@ -1,0 +1,6 @@
+5
+DECLARE a int
+DECLARE a float
+TYPEOF a
+DECLARE a double
+TYPEOF a

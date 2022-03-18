@@ -1,0 +1,7 @@
+6
+DECLARE aaaa bbbb
+DECLARE cccc dddd
+TYPEOF aaaa
+TYPEOF bbbb
+TYPEOF cccc
+TYPEOF dddd
