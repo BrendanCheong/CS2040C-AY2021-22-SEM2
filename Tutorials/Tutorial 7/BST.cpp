@@ -8,8 +8,8 @@ struct BSTVertex {
     BSTVertex* left;
     BSTVertex* right;
     int key;
-    int freq_of_key
-        int height; // will be used in AVL lecture
+    int freq_of_key;
+    int height; // will be used in AVL lecture
 };
 
 // This is just a sample implementation

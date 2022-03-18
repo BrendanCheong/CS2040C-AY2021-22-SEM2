@@ -345,99 +345,54 @@ public:
 
 
 int main() {
-    cout << "Our own Binary Search Tree (NOT NECESSARILY BALANCED)\n";
-    BST<int> T;                                    // an empty BST
+    // let's contrast and compare
+    BST<int>* T = new BST<int>();                            // an empty BST
+    AVL<int>* A = new AVL<int>();                            // an empty AVL
 
-    cout << T.findMin() << '\n';                   // not found, -1
-    cout << T.findMax() << '\n';                   // not found, -1
+    int n = 12;
+    int arr[] = { 15, 32, 100, 6, 23, 4, 7, 71, 5, 50, 3, 1 };
+    for (int i = 0; i < n; ++i) {
+        T->insert(arr[i]);
+        A->insert(arr[i]);
+    }
 
-    // Sample BST as shown in Lecture, the keys are inserted in 'random' order
-    T.insert(15);
-    T.insert(23);
-    T.insert(6);
-    T.insert(71);
-    T.insert(50);
-    T.insert(4);
-    T.insert(7);
-    T.insert(5);
+    // Example of C++ polymorphism: method getHeight() returns different value
+    printf("%d\n", T->getHeight());                // 4, taller tree
+    printf("%d\n", A->getHeight());                // 3, shorter tree
 
-    cout << T.findMin() << '\n';                  // 4
-    cout << T.findMax() << '\n';                  // 71
+    // Another C++ polymorphism: method inorder() returns similar value
+    T->inorder(); // The BST: 1 3 4 5 6 7 15 23 32 50 71 100
+    A->inorder(); // The AVL: 1 3 4 5 6 7 15 23 32 50 71 100
 
-    cout << T.search(71) << '\n';                 // found, 71
-    cout << T.search(7) << '\n';                  // found, 7
-    cout << T.search(22) << '\n';                 // not found, -1
+    printf("---\n");
+    printf("%d\n", A->search(71));                 // found, 71
+    printf("%d\n", A->search(7));                  // found, 7
+    printf("%d\n", A->search(22));                 // not found, -1
 
-    T.inorder();                                  // 4, 5, 6, 7, 15, 23, 50, 71
-    cout << T.successor(23) << '\n';              // 50
-    cout << T.successor(4) << '\n';               // 5
-    cout << T.successor(71) << '\n';              // -1
-    cout << T.predecessor(23) << '\n';            // 15
-    cout << T.predecessor(4) << '\n';             // -1
-    cout << T.predecessor(71) << '\n';            // 50
+    printf("%d\n", A->findMin());                  // 1
+    printf("%d\n", A->findMax());                  // 100
 
-    cout << T.getHeight() << '\n';                // 3
-    T.preorder();                                 // 15, 6, 4, 5, 7, 23, 71, 50
+    sort(arr, arr + n);
+    printf("---\n");
+    for (int i = 0; i < n; ++i)
+        printf("%d %d %d\n", A->predecessor(arr[i]), arr[i], A->successor(arr[i]));
 
-    cout << "Removing 5\n";
-    T.remove(5);
-    cout << "Removing 71\n";
-    T.remove(71);
-    cout << "Removing 15\n";
-    T.remove(15);
+    // deletion demo
+    printf("---\n");
+    printf("Current BST/AVL:");
+    A->inorder();
 
-    T.inorder();                                  // 4, 6, 7, 23, 50
-    cout << T.getHeight() << '\n';                // 2
-    T.preorder();                                 // 23, 6, 4, 7, 50
+    int deletionorder[] = { 23, 100, 32, 71, 50, 7, 5, 1, 3, 6, 15, 4 };
+    for (int i = 0; i < n; ++i) {
+        printf("Deleting: %d\n", deletionorder[i]);
 
-    cout << "C++ STL version\n";
-    set<int> T_stl;
+        A->remove(deletionorder[i]);
+        printf("AVL, height: %d, inorder traversal:", A->getHeight());
+        A->inorder();
 
-    cout << (T_stl.empty() ? -1 : *T_stl.begin()) << '\n';  // not found, -1
-    cout << (T_stl.empty() ? -1 : *T_stl.rbegin()) << '\n'; // not found, -1
-
-    // Sample BST as shown in Lecture, the keys are inserted in 'random' order
-    T_stl.insert(15);
-    T_stl.insert(23);
-    T_stl.insert(6);
-    T_stl.insert(71);
-    T_stl.insert(50);
-    T_stl.insert(4);
-    T_stl.insert(7);
-    T_stl.insert(5);
-
-    cout << *T_stl.begin() << '\n';                // 4
-    cout << *T_stl.rbegin() << '\n';               // 71
-
-    cout << (T_stl.find(71) != T_stl.end() ? 71 : -1) << '\n'; // found, 71
-    cout << (T_stl.find(7) != T_stl.end() ? 7 : -1) << '\n'; // found, 7
-    cout << (T_stl.find(22) != T_stl.end() ? 22 : -1) << '\n'; // not found, -1
-
-    for (auto& v : T_stl)                          // 4, 5, 6, 7, 15, 23, 50, 71
-        cout << ' ' << v;
-    cout << '\n';
-    cout << *T_stl.upper_bound(23) << '\n';        // 50
-    cout << *T_stl.upper_bound(4) << '\n';         // 5
-    cout << (T_stl.upper_bound(71) == T_stl.end() ? -1 : *T_stl.upper_bound(71)) << '\n'; // -1
-    cout << *(--T_stl.lower_bound(23)) << '\n';    // 15
-    cout << (T_stl.lower_bound(4) == T_stl.begin() ? -1 : *(--T_stl.lower_bound(4))) << '\n'; // -1
-    cout << *(--T_stl.lower_bound(71)) << '\n';    // 50
-
-    cout << "No equivalent check tree height in STL\n";
-    cout << "No equivalent preorder traversal in STL\n";
-
-    cout << "Removing 5\n";
-    T_stl.erase(5);
-    cout << "Removing 71\n";
-    T_stl.erase(71);
-    cout << "Removing 15\n";
-    T_stl.erase(15);
-
-    for (auto& v : T_stl)                          // 4, 6, 7, 23, 50
-        cout << ' ' << v;
-    cout << '\n';
-    cout << "No equivalent check tree height in STL\n";
-    cout << "No equivalent preorder traversal in STL\n";
-
+        T->remove(deletionorder[i]);
+        printf("BST, height: %d, inorder traversal:", T->getHeight()); // equal or taller than A->getHeight()
+        T->inorder(); // should be the same as A.inorder()
+    }
     return 0;
 }
