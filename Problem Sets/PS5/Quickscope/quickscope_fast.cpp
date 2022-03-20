@@ -48,8 +48,15 @@ int main()
     cout.tie(NULL);
     ll N; cin >> N;
     ll depth = 0;
-    map<ll, gp_hash_table<string, string, string_hash>> block;
-    gp_hash_table<string, set<ll>, string_hash> HashTable;
+    unordered_map<ll, gp_hash_table<string, string, string_hash>> block;
+    unordered_map<string, set<ll>> HashTable;
+    // Optimised to allow O(1 + α) where α = n/m and m buckets is already max at more than 200000, making O(1 + α) insertion (no duplicates) faster
+    // fast at average 0.21s
+    // no reserve is 0.24s due to resizing table time
+    // with map its 0.26s due to O(log n) operations > O(1 + α)
+    // gp_hash_table slowest at 0.49s due to Open Addressing has being slow (too many collisions)
+    block.reserve(200100); // O(1) operation
+    HashTable.reserve(200100); // O(1) operation
     string var, type;
     while (N--) {
         string cmd; cin >> cmd;
@@ -60,8 +67,8 @@ int main()
         case('}'):
             if (block.find(depth) != block.end()) {
                 for (auto& [k, v] : block[depth])
-                    HashTable[k].erase(depth);
-                block.erase(depth); // frequent deletion, might be better if I use AVL, we'll see
+                    HashTable[k].erase(depth); // O(log n) deletion for AVL set
+                block.erase(depth); // frequent deletion, open addressing with gp_hash_table bad idea
             }
             --depth;
             break;
