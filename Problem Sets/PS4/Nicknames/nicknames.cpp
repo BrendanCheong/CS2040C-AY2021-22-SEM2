@@ -11,7 +11,7 @@ using namespace std;
 using ll = long long;
 using ull = unsigned long long int;
 
-void printMap(map<string, int>& map) {
+void printMap(unordered_map<string, int>& map) {
     // print out the map
     for (auto it = map.begin(); it != map.end(); it++) {
         cout << "{" << it->first << ", " << it->second << "}" << endl;
@@ -33,22 +33,22 @@ int main()
 
     ll A, B;
     string names, nicknames;
-    map<string, int> name_map;
+    unordered_map<string, int> name_map;
     cin >> A;
     for (size_t i = 0; i < A; i++) { // O(A)
         cin >> names;
         for (size_t j = 0; j < names.size(); j++) { // O(10) max
-            name_map[names.substr(0, j + 1)]++; // O(log N) time since regular map
+            name_map[names.substr(0, j + 1)]++; // O(1) time since hash table
         }
     }
 
     cin >> B;
     for (size_t i = 0; i < B; i++) { // O(B)
         cin >> nicknames;
-        cout << name_map[nicknames] << endl; // O(log N) time since regular map
+        cout << name_map[nicknames] << endl; // O(1) time since hash table
     }
 
-    //total time complexity: O(10A log N + B log N) 
+    //total time complexity: O(10A + B) 
 
     return 0;
 }

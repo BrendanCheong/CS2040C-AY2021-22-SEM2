@@ -51,19 +51,17 @@ int main()
         else if (cmd == 1) {
             cin >> name >> infection;
             Cat kitten = clinic[name];
-            auto it = pq.find(kitten);
+            pq.erase(kitten);
             (kitten.infection + infection > 100)
                 ? kitten.infection = 100
                 : kitten.infection += infection;
-            pq.erase(it);
             pq.insert(kitten);
             clinic[name] = kitten;
         }
         else if (cmd == 2) {
             cin >> name;
             Cat kitten = clinic[name];
-            auto it = pq.find(kitten);
-            pq.erase(it);
+            pq.erase(kitten);
             clinic.erase(name);
         }
         else {
