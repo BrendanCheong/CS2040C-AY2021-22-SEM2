@@ -27,7 +27,8 @@ int main()
         cin >> name >> like_level >> date;
         if (people.count(date) > 0 && like_level > get<1>(people[date])) {
             people[date] = make_tuple(name, like_level, date);
-        } else if (people.count(date) == 0) {
+        }
+        else if (people.count(date) == 0) {
             people[date] = make_tuple(name, like_level, date);
         }
     }
