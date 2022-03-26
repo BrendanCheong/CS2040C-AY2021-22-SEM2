@@ -48,10 +48,10 @@ int main() {
     s2.push(s1.top()); // pop the top element out to the second stack
     if (s1.top() > s2.top()) // peek at the next element in the stack and see if it is greater than the popped element in the second stack
       cout << i << ' ';
-  } 
-  . . . if it is, return the counter, clear the second stack. if it is not, pop that element into the second stack, increment the counter and repeat the process. if the first stack is empty and the second stack is not, return -1 for every element that is in the second stack
+  }
+  //   . . . if it is, return the counter, clear the second stack. if it is not, pop that element into the second stack, increment the counter and repeat the process. if the first stack is empty and the second stack is not, return -1 for every element that is in the second stack
 
-the time complexity is O(n) as we only have to go through the first stack n times.
+  // the time complexity is O(n) as we only have to go through the first stack n times.
 
   return 0;
 }

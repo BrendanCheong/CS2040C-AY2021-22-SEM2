@@ -8,15 +8,15 @@ int main() {
   for (auto& vi : v)
     cin >> vi;
   cin.ignore(); // the new line
-  vector<char> c(n-1);
+  vector<char> c(n - 1);
   for (auto& ci : c) {
     cin >> ci;
     cin.ignore(); // a space or a new line
   }
 
   sort(v.begin(), v.end()); // for best O(n) performance of our question, use radix sort instead of std::sort, if not algo is O(n log n)
-  
-  int i = 0, j = n-1; // i/j are front/back pointers, respectively
+
+  int i = 0, j = n - 1; // i/j are front/back pointers, respectively
   for (auto& ci : c) {
     if (ci == '<') // greedily put the smallest element
       cout << v[i++] << ci; // post increment later

@@ -1,0 +1,96 @@
+Dutch National Flag problem
+
+1: 0,0,   3,3,   3,5,   0,6
+
+2: see midterm_RQS_3way.cpp
+
+   rough marking scheme: 
+
+   immediately work or minor error, e.g. returning {i,k+-1} > full marks
+   very minor mistake > 8 marks
+   Need a lot of adjustment and get some correct result > 6 marks
+   The code has something but totally cannot be saved > 4 marks
+   Some code but totally doesn't make sense > 2 marks
+
+3: O(n)
+
+4: st-1 and en+1
+   PS: WE DO NOT ENTERTAIN APPEAL of missing -1 and +1, those are the key part of the question
+
+5: all equal
+
+
+
+Number Placement problem
+
+6: 10 > 7 (subtask 1 hint)
+   11 (filled) > 7 < 8 (subtask 2/general subtask hint)
+   1 < 3 < 5 < 6 < 7 (easy, Subtask 3 hint too)
+
+7: if >, put max-of-2 > min-of-2
+   else if <, put min-of-2 < max-of-2
+
+8: Yes
+
+9: sort the 3 numbers, considered O(3 log 3) = O(1), let a < b < c
+   there are only 4 cases:
+   if we see < and <, output a < b < c
+   if we see < and >, output a < c > b
+   if we see > and >, output c > b > a
+   if we see > and <, output c > a < b
+
+10: No, for 2 of the 4 cases above, e.g.,
+    a < c > b
+    and
+    c > a < b
+
+    we can also do
+    b < c > a
+    and
+    b > a < c
+
+11: Radix sort in O(n), then put all the sorted numbers one by one in each box from left to right
+    partial if you use O(n log n) sorting, partial if you use Counting sort (O(n) but memory limit exceeded)
+
+12: Radix sort in O(n), so the numbers are sorted in ascending order (all distinct).
+    prepare two pointers, min pointer at index 0 (leftmost) and max pointer at index n-1 (rightmost)
+    then do this:
+    if we see a '<', we put current max before it, and decrease max pointer by 1
+    if we see a '>', we put current min before it, and increase min pointer by 1
+    at the end, put the last number at the last box
+    there is no need to prove that this greedy construction works for CS2040 level
+
+    but if you are interested, see https://stackoverflow.com/questions/23800037/correctness-proof-of-algorithm
+    (it generalises as topological sorting / 2nd half stuff, but we don't need to use that to solve this version)
+
+    See midterm_integerplacement.cpp
+
+    rough marking scheme: 
+    10 correct, or minor error
+    7 one major error spotted
+    4 no sorting, but claim it can be done in O(n) by comparing things... (breaking the lower bound of comparison-based sorting)
+    2 mercy points, at least not blank (and not a trivial answer like one character/word)
+    0 blank
+
+
+Find next larger (on the right)
+
+13: {-1, -1, -1, -1, -1}
+    {1, 2, 3, 4, -1}
+    {-1, 3, 3, -1}
+
+14: See midterm_findnextlarger.cpp
+
+    rough marking scheme: 
+    10 correct/looks correct/I can't find bug after scanning for at most 1m, O(n) or O(n log n)... give more marks even for those who didn't say radix sort but correct second part
+    7 correct but clearly O(n^2) brute force (safest to answer in limited time)
+    4 spot at least one clear major wrong, in-between marks between 7 and 2
+    2 mercy points, at least not blank (and not a trivial answer like one character/word)
+    0 blank
+    
+
+
+raw average: 53.1, raw highest = 92.2
+it will be moderated +7.7, so
+final average: 60.8, final highest = 99.9
+Brendan's score: 71.4!

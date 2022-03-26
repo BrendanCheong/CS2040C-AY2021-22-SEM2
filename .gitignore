@@ -35,7 +35,6 @@
 *.vscode
 
 # other
-*.txt
 *.out
 
 !*.cpp
