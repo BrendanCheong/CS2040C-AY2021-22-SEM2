@@ -121,7 +121,7 @@ int main()
         // for example, as its sorted, we will know the closest start to end times
         // anything inbetween those start times are overlapping or equal, and thus are connected
         // once we reach an end point, we move on to the next start point
-        if (time == END) { us.erase(u); continue; }
+        if (time == END) { us.erase(u); continue; } // by erasing we continue to the next node
         for (auto& v : us) {
             AL[u].push_back(v);
             AL[v].push_back(u);
