@@ -13,7 +13,7 @@ using ull = unsigned long long int;
 typedef vector<ll> vll;
 typedef pair<ll, ll> pll;
 typedef vector<pll> vpll;
-#define INF 3e9
+#define INF 10e15
 template <class T> using binary_tree = tree<T, null_type, logical_and<T>, rb_tree_tag, tree_order_statistics_node_update>;
 // change comparator type of logical_and to custom or greater<T> for PQ_max or less<T> for PQ_min
 
