@@ -57,7 +57,6 @@ int main()
     cout.tie(NULL);
     ll n, k; cin >> n >> k;
     UnionFind<ll> UF(n);
-    bool ans = true;
     while (k--) {
         ll a, b; cin >> a >> b;
         UF.unionSet(a - 1, b - 1);
@@ -65,12 +64,12 @@ int main()
 
     for (size_t i = 0; i < (n / 2) + 1; i++) {
         // cout << i << ' ' << n - i - 1 << '\n';
-        if (!UF.isSameSet(i, n - i - 1))
-            ans = false;
+        if (!UF.isSameSet(i, n - i - 1)) {
+            cout << "No" << '\n';
+            return 0;
+        }
     }
-    ans
-        ? cout << "Yes" << endl
-        : cout << "No" << endl;
+    cout << "Yes" << '\n';
 
     return 0;
 }
