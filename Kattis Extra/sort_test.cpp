@@ -9,9 +9,9 @@ void printArray(int A[], int N) {
   cout << endl;
 }
 
-void insertionSort(int A[], int N) { //! No swaps = stable
+void insertionSort(int A[], int N, int limiter) { //! No swaps = stable
   int compared = 0;
-  for (int i = 1; i < N; i++) { // 4 passes
+  for (int i = 1; i <= limiter; i++) { // 4 passes
     int e = A[i];
     int j = i; // last sorted index
     while (j > 0) { // loops until we an index that can put the element, by reducing the last sorted index j
@@ -30,9 +30,11 @@ void insertionSort(int A[], int N) { //! No swaps = stable
   cout << "No. of comparisons: " << compared << endl;
 }
 
-void selectionSort(int A[], int N) {
+void selectionSort(int A[], int N, int limiter) {
   int compared = 0;
-  for (int i = 0; i < N - 1; i++) { // 3 passes, N - 1
+  if (limiter == N)
+    --limiter;
+  for (int i = 0; i < limiter; i++) { // 3 passes, N - 1
     int cur_min = i;
     for (int j = i + 1; j < N; j++) {
       if (A[j] < A[cur_min]) {
@@ -46,20 +48,21 @@ void selectionSort(int A[], int N) {
   cout << "No. of comparisons: " << compared << endl;
 }
 
-void bubbleSort(int A[], int N) { // the standard version
-  int comparisons = 0;
+void bubbleSort(int A[], int N, int limiter) { // the standard version
+  int swaps = 0;
   int passes = 0;
-  for (int j = 0; j < N; j++) {// 3 passes
+  for (int j = 0; j < limiter - 1; j++) {// 3 passes
     for (int i = 0; i < N - j - 1; i++) {
       if (A[i] > A[i + 1]) {
-        cout << "swapped! \n";
-        ++comparisons;
+        // cout << "swapped! \n";
+        ++swaps;
         swap(A[i], A[i + 1]); // !preserves the relative order of keys, STABLE, when comparing we skip elements with same keys. Compares same keys as same value
       }
     }
     ++passes;
   }
-  cout << "No. of comparisons: " << comparisons << '\n' << endl;
+  cout << "No. of swaps: " << swaps << '\n';
+  cout << "No. of passes: " << passes << '\n';
   /**
    * Also bubble sort starts from beginning to end, so at any point the equal keys get swapped, it will cancel out in next interation
    * 4a 4b 1 2 3 5
@@ -70,19 +73,26 @@ void bubbleSort(int A[], int N) { // the standard version
 }
 
 void bubble2(int A[], int N) { // the Optimised bubblesort version, where we wont do O(n^2) on sorted ascending array
+  int j = 0;
+  bool swapped = false;
   int comparisons = 0;
-  int burst, i = 0;
+  int excess = 0;
+  int passes = 0;
   do {
-    for (i = 0, burst = 0; i < N - 1; i++) {
+    swapped = false; ++j; ++passes;
+    for (int i = 0; i < N - j; ++i) {
       if (A[i] > A[i + 1]) {
         swap(A[i], A[i + 1]);
-        burst++;
+        swapped = true;
+        ++comparisons;
+        ++excess;
       }
       ++comparisons;
     }
-  } while (burst != 0);
+  } while (swapped);
 
-  cout << "No. of comparisons: " << comparisons << endl;
+  cout << "No. of comparisons: " << comparisons - excess << '\n';
+  cout << "No. of passes: " << passes << '\n';
 }
 
 int partition(int a[], int i, int j) {
@@ -114,16 +124,48 @@ void quickSort(int a[], int low, int high) {
   }
 }
 
+void pivotChecker(int A[], int N) {
+  int ans = 0;
+  const int SMALLER = 1;
+  const int LARGER = 0;
+  for (int i = 0; i < N; i++) {
+    unordered_set<int> left;
+    for (int j = 0; j < N; j++) {
+      if (i == j) break;
+      if (A[j] < A[i])
+        left.insert(SMALLER);
+      else
+        left.insert(LARGER);
+    }
+    unordered_set<int> right;
+    for (int k = N - 1; k >= 0; k--) {
+      if (i == k) break;
+      if (A[k] < A[i])
+        right.insert(SMALLER);
+      else
+        right.insert(LARGER);
+    }
+
+    if (right.size() == 1 && left.size() == 1) {
+      ++ans;
+      cout << A[i] << '\n';
+    }
+  }
+  cout << "No. of potential pivots: " << ans << '\n';
+}
+
 int main() {
 
-  int array[] = { 27, 8, 28, 17, 21, 29 };
+  int array[] = { 108, 100, 103, 101, 109, 106, 107, 102, 105, 111, 114 };
   int N = NELEMS(array);
+  int limiter = N; //! default is N
 
-  // selectionSort(array, N);
-  // insertionSort(array, N);
-  // bubbleSort(array, N);
-  bubble2(array, N);
+  // selectionSort(array, N, limiter);
+  // insertionSort(array, N, limiter);
+  // bubbleSort(array, N, limiter);
+  // bubble2(array, N);
   // quickSort(array, 0, N - 1);
+  pivotChecker(array, N); //! this doesn't work lol, just do it mannually 
   printArray(array, N);
 
   return 0;
