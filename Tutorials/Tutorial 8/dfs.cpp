@@ -54,14 +54,12 @@ int main() {
     stack<int> stack; stack.push(s);                       // start BFS from s
     p.assign(V, -1);                               // p is global
 
-    int layer = -1;                                // for output printing
     bool isBipartite = true;                       // additional feature
 
     while (!stack.empty()) {
         int u = stack.top(); stack.pop();
         // if (dist[u] != layer) printf("\nLayer %d: ", dist[u]);
         printf("visit %d \n", u);
-        layer = dist[u];
         for (auto& [v, w] : AL[u]) {                 // C++17 style, w ignored
             if (dist[v] == INF) {
                 dist[v] = dist[u] + 1;                     // dist[v] != INF now, we have visited the vertex

@@ -31,7 +31,7 @@ int main() {
 
   vi dist(V, INF); dist[s] = 0;                  // INF = 1e9 here
 
-  // Original Dijkstra's algorithm
+  // ?Original Dijkstra's algorithm
   /*
   set<ii> pq;                                    // balanced BST version
   for (int u = 0; u < V; ++u)                    // dist[u] = INF
@@ -50,7 +50,7 @@ int main() {
   }
   */
 
-  // (Modified) Dijkstra's algorithm
+  // ?(Modified) Dijkstra's algorithm 
   priority_queue<ii, vector<ii>, greater<ii>> pq; pq.push({ 0, s });
 
   // sort the pairs by non-decreasing distance from s
