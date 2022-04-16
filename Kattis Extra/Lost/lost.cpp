@@ -116,6 +116,7 @@ int main()
      * If number of hops are the same, take the min of the weights of the incoming edges
      * thus the relaxation function is like this := distance[v] = { distance[u].first + 1 (first is the number of hops), min(distance[u].second, w) second is the weight }
      * Take away is that BFS can store additional information in each vertex, especially for incoming edges AND number of hops
+     * Time Complexity: O(V+E)
     */
 
     return 0;
