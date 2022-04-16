@@ -96,7 +96,7 @@ int main()
 
     // print dist vector
     ll ans = 0;
-    for (auto& [k, v] : dist) {
+    for (auto& [k, v] : dist) { // O(V)
         if (v == INF) {
             cout << "Impossible\n";
             return 0;
