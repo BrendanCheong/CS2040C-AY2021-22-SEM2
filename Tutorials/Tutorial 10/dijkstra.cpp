@@ -7,6 +7,18 @@ typedef vector<ii> vii;
 
 const int INF = 1e9; // INF = 1B, not 2^31-1 to avoid overflow
 
+void printPath(vi const& prev, int destination, int source)
+{
+  if (destination < 0) {
+    return;
+  }
+  printPath(prev, prev[destination], source);
+  if (destination != source) {
+    cout << ", ";
+  }
+  cout << destination;
+}
+
 int main() {
   /*
   // Graph in Figure 4.17
@@ -20,7 +32,7 @@ int main() {
   3 4 5
   */
 
-  freopen("dijkstra_in.txt", "r", stdin);
+  freopen("dijkstra_2.txt", "r", stdin);
 
   int V, E, s; scanf("%d %d %d", &V, &E, &s);
   vector<vii> AL(V, vii());
@@ -30,6 +42,7 @@ int main() {
   }
 
   vi dist(V, INF); dist[s] = 0;                  // INF = 1e9 here
+  vi prev(V, -1); // keep track of SSSP 
 
   // ?Original Dijkstra's algorithm
   /*
@@ -45,6 +58,7 @@ int main() {
       if (dist[u]+w >= dist[v]) continue;        // not improving, skip
       pq.erase(pq.find({dist[v], v}));           // erase old pair
       dist[v] = dist[u]+w;                       // relax operation
+      prev[v] = u;                               // update prev[v] for path reconstruction
       pq.insert({dist[v], v});                   // enqueue better pair
     }
   }
@@ -60,12 +74,30 @@ int main() {
     for (auto& [v, w] : AL[u]) {                 // all edges from u
       if (dist[u] + w >= dist[v]) continue;        // not improving, skip
       dist[v] = dist[u] + w;                       // relax operation
+      prev[v] = u;                                 // update prev[v] for path reconstruction
       pq.push({ dist[v], v });                     // enqueue better pair
     }
   }
 
   for (int u = 0; u < V; ++u)
     printf("SSSP(%d, %d) = %d\n", s, u, dist[u]);
+
+
+  for (int i = 0; i < V; i++)
+  {
+    if (i != s && dist[i] != INT_MAX)
+    {
+      cout << "Path (" << s << " —> " << i << "): Minimum cost = "
+        << dist[i] << ", Route = [";
+      printPath(prev, i, s);
+      cout << "]" << endl;
+    }
+  }
+
+  // print prev array
+  for (auto& ele : prev) {
+    cout << ele << " ";
+  }
 
   return 0;
 }

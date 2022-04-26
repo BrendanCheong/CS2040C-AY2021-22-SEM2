@@ -46,7 +46,7 @@ int main() {
     3 4 9
     */
 
-    freopen("mst_in.txt", "r", stdin);
+    freopen("mst_2.txt", "r", stdin);
 
     // Kruskal's algorithm
     int V, E; scanf("%d %d", &V, &E);

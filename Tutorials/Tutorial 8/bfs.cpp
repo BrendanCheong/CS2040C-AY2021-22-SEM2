@@ -15,6 +15,17 @@ void printPath(int u) {                          // extract info from vi p, p is
     printf(" %d", u);
 }
 
+void printVector(vi& v) {
+    int N = v.size();
+    cout << '[';
+    if (!N) cout << ']';
+    for (size_t i = 0; i < N; i++) {
+        cout << v[i];
+        (i == (N - 1)) ? cout << ']' : cout << ", ";
+    }
+    cout << '\n';
+}
+
 int main() {
     /*
     Graph in Figure 4.3, format: list of unweighted edges
@@ -24,29 +35,29 @@ int main() {
     4 8    8 9    5 10   6 11   7 12   9 10   10 11  11 12
     */
 
-    // freopen("bfs_in.txt", "r", stdin);
-    freopen("dfs_cc_in.txt", "r", stdin);
+    freopen("bfs_in.txt", "r", stdin);
+    // freopen("dfs_cc_in.txt", "r", stdin);
 
     // !uncomment for bfs.txt
-    // int V, E; scanf("%d %d", &V, &E);
-    // vector<vii> AL(V, vii());
-    // for (int i = 0; i < E; ++i) {
-    //     int a, b; scanf("%d %d", &a, &b);
-    //     AL[a].emplace_back(b, 0);
-    //     AL[b].emplace_back(a, 0);
-    // }
+    int V, E; scanf("%d %d", &V, &E);
+    vector<vii> AL(V, vii());
+    for (int i = 0; i < E; ++i) {
+        int a, b; scanf("%d %d", &a, &b);
+        AL[a].emplace_back(b, 0);
+        AL[b].emplace_back(a, 0);
+    }
 
     // !uncomment for dfs_cc.txt
-    int V; scanf("%d", &V);
-    vector<vii> AL(V, vii());
-    AL.assign(V, vii());
-    for (int u = 0; u < V; ++u) {
-        int k; scanf("%d", &k);
-        while (k--) {
-            int v, w; scanf("%d %d", &v, &w);
-            AL[u].emplace_back(v, w);
-        }
-    }
+    // int V; scanf("%d", &V);
+    // vector<vii> AL(V, vii());
+    // AL.assign(V, vii());
+    // for (int u = 0; u < V; ++u) {
+    //     int k; scanf("%d", &k);
+    //     while (k--) {
+    //         int v, w; scanf("%d %d", &v, &w);
+    //         AL[u].emplace_back(v, w);
+    //     }
+    // }
 
     // as an example, we start from this source, see Figure 4.3
     int s = 0;
@@ -76,8 +87,10 @@ int main() {
     }
 
     printf("\nShortest path: ");
-    printPath(7), printf("\n");
+    printPath(11), printf("\n");
     printf("isBipartite? %d\n", isBipartite);
+
+    printVector(p);
 
     return 0;
 }
