@@ -122,23 +122,23 @@ int main()
     cout.tie(NULL);
 
     //? variables I must input
-    const ll table_size = 13;
+    const ll table_size = 11;
     const ll reduction = 11; // reduction for double hashing
     const ll second_hash = 11; // second m to hash for double hashing
 
     //? for the questions asking what the sequene of insertions are, will tell you which index to put the number
     // quadraticProbe(59, table_size);
-    // linearProbe(71, table_size);
+    linearProbe(45, table_size);
     // doubleProbing(75, table_size, second_hash, reduction);
 
 
     //? for the keys question, will actually hash the keys and insert into "hashtable" or sorts
     vector<ll> hashTable(table_size, 999);
-    vector<ll> keys = { 58, 45, 19, 32, 63 };
+    vector<ll> keys = { 41, 5, 40, 30, 19 };
 
-    // LP(hashTable, keys, table_size);
+    LP(hashTable, keys, table_size);
     // QP(hashTable, keys, table_size);
-    DH(hashTable, keys, table_size, second_hash, reduction);
+    // DH(hashTable, keys, table_size, second_hash, reduction);
 
     printVector(hashTable);
 
