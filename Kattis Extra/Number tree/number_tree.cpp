@@ -40,7 +40,7 @@ int main()
     cout.tie(NULL);
 
     ll n; string cmd = ""; cin >> n >> cmd;
-    ll num_of_elements = pow(2, n + 1) - 1;
+    ll num_of_elements = pow(2, n + 1) - 1; // ( 2 ^ ( h + 1 ) ) - 1 is the n elements in the tree
     if (cmd.length() > 0) {
         solve(num_of_elements, cmd);
     }
