@@ -28,12 +28,6 @@ g++ -o main.out --std c++17 main.cpp
 # Boilerplate 
 
 ```cpp
-/**
- * Matric: A0217988E
- * Name: Brendan Cheong Ern Jie
- * Lab: 10
- * TA: Fidella Widjojo
-*/
 #include <bits/extc++.h>
 
 using namespace std;
@@ -42,7 +36,7 @@ using ll = long long;
 using ull = unsigned long long int;
 typedef vector<ll> vll;
 typedef pair<ll, ll> pll;
-#define INF 0x3f3f3f3f
+#define INF 10e15
 template <class T> using binary_tree = tree<T, null_type, logical_and<T>, rb_tree_tag, tree_order_statistics_node_update>;
 // change comparator type of logical_and to custom or greater<T> for PQ_max or less<T> for PQ_min
 
